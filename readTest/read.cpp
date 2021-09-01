@@ -50,6 +50,9 @@ int main(){
     vector<user> t_sendUsers;
 
     if( !readFile.is_open() ){//判断打开是否成功
+        cout << "Open file error." << endl ;
+        cout << "Maybe the file doesn't exist." << endl ;
+        cout << "Maybe the file name is incorrect" << endl ;
         return 0;
     }
     else{
