@@ -17,12 +17,10 @@ int main()
 
 	// 1.初始化
 	WSADATA wsadata;
-	WSAStartup(MAKEWORD(2, 2), &wsadata);//make word,你把鼠标移到WSAStartup看看参数列表,是不是就是一个word啊
-
+	WSAStartup(MAKEWORD(2, 2), &wsadata);//函数用于初始化供进程调用的Winsock相关的dll。
 
 	// 2.创建服务器的套接字
-	SOCKET serviceSocket;
-	serviceSocket = socket(AF_INET, SOCK_STREAM, 0);//socket(协议族,socket数据传输方式,某个协议),我们默认为0,其实就是一个宏
+	SOCKET serviceSocket = socket( AF_INET , SOCK_STREAM , 0 );
 	if (SOCKET_ERROR == serviceSocket) {	
 		std::cout << "Create socket error!" << std::endl;
 	}
