@@ -5,6 +5,10 @@
 
 namespace she{
 
+/* @brief 该类从文件中读取相关网络数据
+
+ * 
+ */
 class ReadUserIp{
     public:
         ReadUserIp();
@@ -12,6 +16,7 @@ class ReadUserIp{
         ~ReadUserIp();
 
     public:
+        //网络地址结构体
         struct user{
             std::string name;
             std::string ip  ;
@@ -19,8 +24,16 @@ class ReadUserIp{
         };
 
     private:
+        /*
+         * 按行解析:从:到;之间的内容
+         */
         std::string m_parsing(std::string);
 
+        char* m_fileName;//文件名
+
+        /*
+         * 从文件读取的主流程
+         */
         int start();
     
     public:
