@@ -14,10 +14,15 @@
 //使用 Winsock 的应用程序必须与 Ws2 _ 32.lib 库文件链接
 #pragma comment(lib, "Ws2_32.lib")
 
+#include <iostream>
+
 int main(){
     //__0.备用数据
-    const char* port = "27011";//端口号，DEFAULT_PORT
-    int iResult = 0;
+    const char* port = "27011" ;//端口号，DEFAULT_PORT
+    int iResult = 0 ;
+    int iSendResult ;
+    char recvbuf[1024] ;//接收缓冲区
+    int recvbuflen = 1024 ;//缓冲区大小
 
 
     //__1.初始化 Winsock
@@ -50,7 +55,7 @@ int main(){
         /*创建套接字失败,异常待添加*/
         freeaddrinfo(result);
         WSACleanup();
-    }
+    };MSG_DONTROUTE;
 
 
     //__3.绑定套接字
@@ -91,7 +96,29 @@ int main(){
     }
 
     //__6.接收和发送数据
+    //接收，直到对方关闭连接
+    do {
+        iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
+        if (iResult > 0) {
+            std::cout << "Bytes received: "<< iResult << std::endl ;
 
+            //将缓冲区回传给发送方
+            iSendResult = send(ClientSocket, recvbuf, iResult, 0);
+            if (iSendResult == SOCKET_ERROR) {
+                /*发送数据失败,异常待添加*/
+                closesocket(ClientSocket);
+                WSACleanup();
+            }
+            std::cout << "Bytes sent:" << iSendResult << std::endl ;
+        } else if (iResult == 0){
+            /*连接已断开,异常待添加*/
+        }
+        else {
+            /*接收数据失败,异常待添加*/
+            closesocket(ClientSocket);
+            WSACleanup();
+        }
+    } while (iResult > 0);
 
 
     //__7.断开连接

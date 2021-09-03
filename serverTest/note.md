@@ -66,3 +66,28 @@
 @param SOCKET s:    标识要关闭的套接字的描述符
 @return 如果没有发生错误,closesocket返回零,否则,返回SOCKET_ERROR的值
 @notice 一旦发出closesocket函数，在s参数中传递的套接字描述符可能会立即被系统重用。因此，期望对s参数中传递的套接字描述符的进一步引用失败并出现错误WSAENOTSOCK是不可靠的。Winsock 客户端绝不能在s上与另一个 Winsock 函数调用同时发出closesocket。
+
+
+@brief send函数
+@param SOCKET s:        识别连接socket的描述符
+@param const char *buf: 指向包含要传输数据的缓冲区的指针
+@param int len:         缓冲区中数据的长度
+@param int flag:        一组标记，指定呼叫方式。此参数是使用具有以下任何值的位向或操作员构建的  
+    1   MSG_OOB         仅发送 OOB 数据
+    4   MSG_DONTROUTE   指定数据不应受路由限制。Windows 插座服务提供商可以选择忽略此标志。 
+@return 如果没有发生错误，发送返回发送的字节总数,该字节可能小于请求发送的len参数中的字节总数,否则,将返回SOCKET_ERROR值
+
+
+@brief recv函数
+@param SOCKET s:        标识连接socket的描述符
+@param const char *buf: 接收传入数据的缓冲区的指针
+@param int len:         缓冲区中数据的长度
+@param int flag:        一组标记，指定呼叫方式。此参数是使用具有以下任何值的位向或操作员构建的  
+@return 如果没有发生错误，recv会返回收到的字节数，缓冲参数指向的缓冲将包含收到的数据，如果连接已优雅的关闭,则返回值为零
+
+
+@brief connect函数
+@param SOCKET s:                识别未连接的socket描述符
+@param const sockaddr *name:    A pointer to the sockaddr structure,服务器的信息
+@param int namelen:             The length,in bytes,of the sockaddr structure pointed to by the name parameter.
+@return 如果没有发生错误,连接返回零,否则它会返回SOCKET_ERROR
