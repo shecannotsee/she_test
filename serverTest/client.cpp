@@ -1,81 +1,164 @@
-/* å®¢æˆ·ç«¯å¸¸è§„æ¨¡å‹
- * 1.åˆå§‹åŒ– Winsockã€‚
- * 2.åˆ›å»ºå¥—æ¥å­—ã€‚
- * 3.è¿æ¥åˆ°è¯¥æœåŠ¡å™¨ã€‚
- * 4.å‘é€å’Œæ¥æ”¶æ•°æ®ã€‚
- * 5.æ¥å—æ¥è‡ªå®¢æˆ·ç«¯çš„è¿æ¥ã€‚
+/* ¿Í»§¶Ë³£¹æÄ£ĞÍ
+ * 1.³õÊ¼»¯ Winsock
+ * 2.´´½¨Ì×½Ó×Ö
+ * 3.Á¬½Óµ½¸Ã·şÎñÆ÷
+ * 4.·¢ËÍºÍ½ÓÊÕÊı¾İ
+ * 5.¶Ï¿ªÁ¬½Ó
  */
 #include <WS2tcpip.h>
 #include <Winsock2.h>
 #include <Windows.h>
-//ä½¿ç”¨ Winsock çš„åº”ç”¨ç¨‹åºå¿…é¡»ä¸ Ws2 _ 32.lib åº“æ–‡ä»¶é“¾æ¥
+ //Ê¹ÓÃ Winsock µÄÓ¦ÓÃ³ÌĞò±ØĞëÓë Ws2 _ 32.lib ¿âÎÄ¼şÁ´½Ó
 #pragma comment(lib, "Ws2_32.lib")
 
+#include "../Server/thread.hpp"
+
 #include <iostream>
+#include <string>
 
 int main()
-{   //__0.å¤‡ç”¨æ•°æ®
-    const char* port = "27011" ;//ç«¯å£å·ï¼ŒDEFAULT_PORT
-    int iResult = 0 ;
-    
-    //__1.åˆå§‹åŒ– Winsock
+{   //__0.±¸ÓÃÊı¾İ
+    const char* ip   = "127.0.0.1"; //ip£¬ÍâÍøip£º£¬ÌÚÑ¶·şÎñÆ÷
+    const char* port = "1234";     //¶Ë¿ÚºÅ£¬DEFAULT_PORT
+    int iResult = 0;
+
+    //__1.³õÊ¼»¯ Winsock
     WSADATA wsaData;
-    //åˆå§‹åŒ–æ£€æµ‹
-    iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
+    //³õÊ¼»¯¼ì²â
+    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
-        /*åˆå§‹åŒ–å¤±è´¥,å¼‚å¸¸å¾…æ·»åŠ */
+        /*³õÊ¼»¯Ê§°Ü,Òì³£´ıÌí¼Ó*/
     }
 
 
-    //__2.åˆ›å»ºå¥—æ¥å­—
-    struct addrinfo *result = NULL,*ptr = NULL, hints;
-    ZeroMemory( &hints, sizeof(hints) );
+    //__2.´´½¨Ì×½Ó×Ö
+    struct addrinfo* result = NULL, * ptr = NULL, hints;
+    ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
-    //è§£ææœåŠ¡å™¨åœ°å€å’Œç«¯å£
-    iResult = getaddrinfo(argv[1], port, &hints, &result);
+    //½âÎö·şÎñÆ÷µØÖ·ºÍ¶Ë¿Ú
+    iResult = getaddrinfo(ip, port, &hints, &result);//ÌîÈëipÓë¶Ë¿Ú£¬¶Ë¿ÚÔÚÇ°ÃæÌîÈë
     if (iResult != 0) {
-        /*å¤±è´¥å¼‚å¸¸å¤„ç†*/
+        /*Ê§°ÜÒì³£´¦Àí*/
         WSACleanup();
     }
     SOCKET ConnectSocket = INVALID_SOCKET;
-    //å°è¯•è¿æ¥åˆ°è°ƒç”¨getaddrinfoè¿”å›çš„ç¬¬ä¸€ä¸ªåœ°å€
-    ptr=result;
-    //åˆ›å»ºç”¨äºè¿æ¥åˆ°æœåŠ¡å™¨çš„SOCKET
+    //³¢ÊÔÁ¬½Óµ½µ÷ÓÃgetaddrinfo·µ»ØµÄµÚÒ»¸öµØÖ·
+    ptr = result;
+    //´´½¨ÓÃÓÚÁ¬½Óµ½·şÎñÆ÷µÄSOCKET
     ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
     if (ConnectSocket == INVALID_SOCKET) {
-        /*å¥—æ¥å­—åˆ›å»ºå¤±è´¥ï¼Œå¼‚å¸¸å¾…æ·»åŠ */
+        /*Ì×½Ó×Ö´´½¨Ê§°Ü£¬Òì³£´ıÌí¼Ó*/
+        std::cout << "Create socket error.\n";
         freeaddrinfo(result);
         WSACleanup();
     }
 
 
-    //__3.è¿æ¥åˆ°è¯¥æœåŠ¡å™¨
-    // Connect to server.
-    iResult = connect( ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
+    //__3.Á¬½Óµ½¸Ã·şÎñÆ÷,·şÎñÆ÷ipÓë¶Ë¿ÚÓ¦ÔÚ´Ë²½Öè¶¨Ïò
+    //Á¬½Óµ½·şÎñÆ÷
+    iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
     if (iResult == SOCKET_ERROR) {
         closesocket(ConnectSocket);
         ConnectSocket = INVALID_SOCKET;
     }
-
-    // Should really try the next address returned by getaddrinfo
-    // if the connect call failed
-    // But for this simple example we just free the resources
-    // returned by getaddrinfo and print an error message
+    //Èç¹ûÁ¬½Óºô½ĞÊ§°Ü,ÔòÓ¦¸ÃÊ¹ÓÃgetAddrinfo·µ»ØµÄÏÂÒ»¸öµØÖ·
+    //ÒòÎªÕâÊÇÒ»¸ö¼òµ¥Àı×Ó,ËùÒÔÖ»ÊÇÊÍ·Å×ÊÔ´
     freeaddrinfo(result);
     if (ConnectSocket == INVALID_SOCKET) {
-        printf("Unable to connect to server!\n");
+        /*Á¬½ÓÊ§°Ü,Ò»i¾­´úÂë´ıÌí¼Ó*/
+        std::cout << "Connection failed.\n";
         WSACleanup();
-        return 1;
+    }
+    else {
+        std::cout << "Connect server success.\n";
     }
 
 
-    //__4.å‘é€å’Œæ¥æ”¶æ•°æ®
 
 
 
-    //__5.æ¥å—æ¥è‡ªå®¢æˆ·ç«¯çš„è¿æ¥
+    //__4.·¢ËÍºÍ½ÓÊÕÊı¾İ
+    //char recvbuf[1024];//»º³åÇø
+    //char sendbuf[1024];//·¢ËÍÄÚÈİ
+    //int recvbuflen = 1024;//»º³åÇø³¤¶È
+
+    socketAndType* recvServer = new socketAndType;
+    (*recvServer).c = ConnectSocket;
+    (*recvServer).type = 1;//½ÓÊÕÏß³Ì±êÊ¶
+    (*recvServer).index = 2;//¿Í»§¶Ë
+
+    socketAndType* sendServer = new socketAndType;
+    (*sendServer).c = ConnectSocket;
+    (*sendServer).type = 2;//·¢ËÍÏß³Ì±êÊ¶
+    (*sendServer).index = 2;//¿Í»§¶Ë
+
+    HANDLE hThread[2];//»ñÈ¡¾ä±ú
+    hThread[0] = CreateThread(NULL, 0, &transmmit, recvServer, 0, NULL);
+    hThread[1] = CreateThread(NULL, 0, &transmmit, sendServer, 0, NULL);
+
+    //µÈ´ıÏß³ÌÍê³É
+    WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
+
+    delete recvServer; recvServer = nullptr;
+    delete sendServer; sendServer = nullptr;
+
+    
+
+    
+
+    ////_1.·¢ËÍÊı¾İÄ£¿é
+    ////³õÊ¼»¯·¢ËÍ»º³åÇø
+    //iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
+    //if (iResult == SOCKET_ERROR) {
+    //    /*·¢ËÍÊı¾İÊ§°Ü,Òì³£´ıÌí¼Ó*/
+    //    closesocket(ConnectSocket);
+    //    WSACleanup();
+    //}
+    //std::cout << "Bytes Sent:" << iResult << std::endl;
+
+    ////¹Ø±Õ·¢ËÍ
+    //iResult = shutdown(ConnectSocket, SD_SEND);
+    //if (iResult == SOCKET_ERROR) {
+    //    /*¹Ø±Õ*/
+    //    closesocket(ConnectSocket);
+    //    WSACleanup();
+    //}
+
+    ////_2.½ÓÊÕÊı¾İÄ£¿é
+    ////½ÓÊÕÊı¾İ,Ö±µ½·şÎñÆ÷¹Ø±ÕÁ¬½Ó
+    //do {
+    //    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+    //    if (iResult > 0) {
+    //        std::cout << "Bytes received:" << iResult << std::endl;
+    //        /*¿ÉÒÔÌí¼Ó½ÓÊÕÊı¾İµÄÕ¹Ê¾*/
+    //    }
+    //    else if (iResult == 0) {
+    //        /*Á¬½Ó¹Ø±Õ,·ÇÒì³£,´ıÌí¼Ó*/
+    //    }
+    //    else {
+    //        /*½ÓÊÕÊ§°Ü,Òì³£´ıÌí¼Ó*/
+    //    }
+    //} while (iResult > 0);
+
+
+
+
+
+
+    //__5.½ÓÊÜÀ´×Ô¿Í»§¶ËµÄÁ¬½Ó
+    //¹Ø±Õ·¢ËÍÒ»°ëµÄÁ¬½Ó,ÒòÎªÃ»ÓĞ¸ü¶àµÄÊı¾İ½«±»·¢ËÍ
+    iResult = shutdown(ConnectSocket, SD_SEND);
+    if (iResult == SOCKET_ERROR) {
+        /*¹Ø±ÕÁ¬½ÓÊ§°Ü,Òì³£´ıÌí¼Ó*/
+        // closesocket(ConnectSocket);
+        // WSACleanup();
+    }
+    //¹Ø±ÕÌ×½Ó×Ö,ÊÍ·Å×ÊÔ´
+    closesocket(ConnectSocket);
+    WSACleanup();
+    std::cout << "Close socket.\n";
 
 
 

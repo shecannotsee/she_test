@@ -1,131 +1,167 @@
-/* æœåŠ¡å™¨å¸¸è§„æ¨¡å‹
- * 1.åˆå§‹åŒ– Winsock
- * 2.åˆ›å»ºå¥—æ¥å­—
- * 3.ç»‘å®šå¥—æ¥å­—
- * 4.åœ¨å¥—æ¥å­—ä¸Šä¾¦å¬å®¢æˆ·ç«¯
- * 5.æ¥å—æ¥è‡ªå®¢æˆ·ç«¯çš„è¿æ¥
- * 6.æ¥æ”¶å’Œå‘é€æ•°æ®
- * 7.æ–­å¼€è¿æ¥
+/* ·şÎñÆ÷³£¹æÄ£ĞÍ
+ * 1.³õÊ¼»¯ Winsock
+ * 2.´´½¨Ì×½Ó×Ö
+ * 3.°ó¶¨Ì×½Ó×Ö
+ * 4.ÔÚÌ×½Ó×ÖÉÏÕìÌı¿Í»§¶Ë
+ * 5.½ÓÊÜÀ´×Ô¿Í»§¶ËµÄÁ¬½Ó
+ * 6.½ÓÊÕºÍ·¢ËÍÊı¾İ
+ * 7.¶Ï¿ªÁ¬½Ó
  */
-#define _WIN32_WINNT 0x0501//getaddrinfo
+//#define _WIN32_WINNT 0x0501//getaddrinfo
 #include <WS2tcpip.h>
 #include <Winsock2.h>
 #include <Windows.h>
-//ä½¿ç”¨ Winsock çš„åº”ç”¨ç¨‹åºå¿…é¡»ä¸ Ws2 _ 32.lib åº“æ–‡ä»¶é“¾æ¥
+ //Ê¹ÓÃ Winsock µÄÓ¦ÓÃ³ÌĞò±ØĞëÓë Ws2 _ 32.lib ¿âÎÄ¼şÁ´½Ó
 #pragma comment(lib, "Ws2_32.lib")
 
+#include "thread.hpp"
 #include <iostream>
 
-int main(){
-    //__0.å¤‡ç”¨æ•°æ®
-    const char* port = "27011" ;//ç«¯å£å·ï¼ŒDEFAULT_PORT
-    int iResult = 0 ;
-    int iSendResult ;
-    char recvbuf[1024] ;//æ¥æ”¶ç¼“å†²åŒº
-    int recvbuflen = 1024 ;//ç¼“å†²åŒºå¤§å°
+int main() {
+    //__0.±¸ÓÃÊı¾İ
+    const char* ip = "127.0.0.1"; //ip£¬ÍâÍøip£º
+    const char* port = "1234";//¶Ë¿ÚºÅ£¬DEFAULT_PORT
+    int iResult = 0;
 
 
-    //__1.åˆå§‹åŒ– Winsock
+    //__1.³õÊ¼»¯ Winsock
     WSADATA wsaData;
-    //åˆå§‹åŒ–æ£€æµ‹
-    iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
+    //³õÊ¼»¯¼ì²â
+    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
-        /*åˆå§‹åŒ–å¤±è´¥,å¼‚å¸¸å¾…æ·»åŠ */
+        /*³õÊ¼»¯Ê§°Ü,Òì³£´ıÌí¼Ó*/
     }
 
 
-    //__2.åˆ›å»ºå¥—æ¥å­—
-    //Getaddrinfoå‡½æ•°ç”¨äºç¡®å®šsockaddrç»“æ„ä¸­çš„å€¼,Addrinfoç»“æ„ç”±getaddrinfoå‡½æ•°ä½¿ç”¨ã€‚
-    struct addrinfo *result = NULL, *ptr = NULL, hints;
-    ZeroMemory(&hints, sizeof (hints)); //åˆ†é…å†…å­˜å¹¶ç”¨0åˆå§‹åŒ–,ä»…windows
-    hints.ai_family   = AF_INET;        //IPv4
-    hints.ai_socktype = SOCK_STREAM;    //æµå¥—æ¥å­—
-    hints.ai_protocol = IPPROTO_TCP;    //ç”¨äºtcpåè®®
-    hints.ai_flags    = AI_PASSIVE;     //
-    //è§£å†³æœåŠ¡å™¨ä½¿ç”¨çš„æœ¬åœ°åœ°å€å’Œç«¯å£
-    iResult = getaddrinfo(NULL, port, &hints, &result);
+    //__2.´´½¨Ì×½Ó×Ö
+    //Getaddrinfoº¯ÊıÓÃÓÚÈ·¶¨sockaddr½á¹¹ÖĞµÄÖµ,Addrinfo½á¹¹ÓÉgetaddrinfoº¯ÊıÊ¹ÓÃ¡£
+    struct addrinfo* result = NULL, * ptr = NULL, hints;
+    ZeroMemory(&hints, sizeof(hints)); //·ÖÅäÄÚ´æ²¢ÓÃ0³õÊ¼»¯,½öwindows
+    hints.ai_family = AF_INET;        //IPv4
+    hints.ai_socktype = SOCK_STREAM;    //Á÷Ì×½Ó×Ö
+    hints.ai_protocol = IPPROTO_TCP;    //ÓÃÓÚtcpĞ­Òé
+    hints.ai_flags = AI_PASSIVE;     //
+    //½â¾ö·şÎñÆ÷Ê¹ÓÃµÄ±¾µØµØÖ·ºÍ¶Ë¿Ú
+    iResult = getaddrinfo(ip, port, &hints, &result);
     if (iResult != 0) {
-        /*å¤±è´¥å¼‚å¸¸å¤„ç†*/
+        /*Ê§°ÜÒì³£´¦Àí*/
+        std::cout << "getaddrinfo error.\n";
         WSACleanup();
     }
     SOCKET ListenSocket = INVALID_SOCKET;
-    //ä¸ºæœåŠ¡å™¨åˆ›å»ºä¸€ä¸ªå¥—æ¥å­—ä»¥ä¾¦å¬å®¢æˆ·ç«¯è¿æ¥
+    //Îª·şÎñÆ÷´´½¨Ò»¸öÌ×½Ó×ÖÒÔÕìÌı¿Í»§¶ËÁ¬½Ó
     ListenSocket = socket((*result).ai_family, (*result).ai_socktype, (*result).ai_protocol);
     if (ListenSocket == INVALID_SOCKET) {
-        /*åˆ›å»ºå¥—æ¥å­—å¤±è´¥,å¼‚å¸¸å¾…æ·»åŠ */
+        /*´´½¨Ì×½Ó×ÖÊ§°Ü,Òì³£´ıÌí¼Ó*/
+        std::cout << "Create socket error.\n";
         freeaddrinfo(result);
         WSACleanup();
-    };MSG_DONTROUTE;
+    }; MSG_DONTROUTE;
 
 
-    //__3.ç»‘å®šå¥—æ¥å­—
-    //è®¾ç½®TCPä¾¦å¬å¥—æ¥å­—
-    iResult = bind( ListenSocket, result->ai_addr, (int)result->ai_addrlen);
+    //__3.°ó¶¨Ì×½Ó×Ö
+    //ÉèÖÃTCPÕìÌıÌ×½Ó×Ö
+    iResult = bind(ListenSocket, result->ai_addr, (int)result->ai_addrlen);
     if (iResult == SOCKET_ERROR) {
-        /*å¥—æ¥å­—ç»‘å®šç½‘ç»œåœ°å€å¤±è´¥,å¼‚å¸¸å¾…æ·»åŠ */
-
+        /*Ì×½Ó×Ö°ó¶¨ÍøÂçµØÖ·Ê§°Ü,Òì³£´ıÌí¼Ó*/
+        std::cout << "Bind error.\n";
         freeaddrinfo(result);
         closesocket(ListenSocket);
         WSACleanup();
     }
-    //ä¸å†éœ€è¦ getaddrinfo å‡½æ•°è¿”å›çš„åœ°å€ä¿¡æ¯,é‡Šæ”¾åˆ†é…å†…å­˜
-    freeaddrinfo(result);
+    //²»ÔÙĞèÒª getaddrinfo º¯Êı·µ»ØµÄµØÖ·ĞÅÏ¢,ÊÍ·Å·ÖÅäÄÚ´æ
+    //freeaddrinfo(result);
 
 
-    //__4.åœ¨å¥—æ¥å­—ä¸Šä¾¦å¬å®¢æˆ·ç«¯
-    if ( listen( ListenSocket, SOMAXCONN ) == SOCKET_ERROR ) {
-        /*ä¾¦å¬å¤±è´¥ï¼Œå¼‚å¸¸å¾…æ·»åŠ */
-        closesocket( ListenSocket );
-        WSACleanup();
-    }
-
-
-    //__5.æ¥å—æ¥è‡ªå®¢æˆ·ç«¯çš„è¿æ¥
-    //åˆ›å»ºåä¸ºClientSocketçš„ä¸´æ—¶å¥—æ¥å­—å¯¹è±¡,ä»¥æ¥å—æ¥è‡ªå®¢æˆ·ç«¯çš„è¿æ¥
-    SOCKET ClientSocket = INVALID_SOCKET;
-    //å¯¹äºé«˜æ€§èƒ½æœåŠ¡å™¨ï¼Œé€šå¸¸ä½¿ç”¨å¤šä¸ªçº¿ç¨‹æ¥å¤„ç†å¤šä¸ªå®¢æˆ·ç«¯è¿æ¥
-    //æœ‰å‡ ç§ä¸åŒçš„ç¼–ç¨‹æŠ€æœ¯ä½¿ç”¨Winsock,å¯ç”¨äºä¾¦å¬å¤šä¸ªå®¢æˆ·ç«¯è¿æ¥
-    //ä¸€ç§ç¼–ç¨‹æ–¹æ³•æ˜¯åˆ›å»ºä¸€ä¸ªè¿ç»­å¾ªç¯,è¯¥å¾ªç¯ä½¿ç”¨listenå‡½æ•°æ£€æŸ¥è¿æ¥è¯·æ±‚
-    //å¦‚æœå‡ºç°è¿æ¥è¯·æ±‚,åº”ç”¨ç¨‹åºå°†è°ƒç”¨accept,AcceptEx,WSAAccept å‡½æ•°
-    //å¹¶å°†å·¥ä½œä¼ é€’åˆ°å¦ä¸€ä¸ªçº¿ç¨‹æ¥å¤„ç†è¯·æ±‚
-    ClientSocket = accept( ListenSocket , NULL , NULL );
-    if (ClientSocket == INVALID_SOCKET) {
-        /*æ¥å—å®¢æˆ·ç«¯å¤±è´¥ï¼Œå¼‚å¸¸å¾…æ·»åŠ */
+    //__4.ÔÚÌ×½Ó×ÖÉÏÕìÌı¿Í»§¶Ë
+    if (listen(ListenSocket, SOMAXCONN) == SOCKET_ERROR) {
+        /*ÕìÌıÊ§°Ü£¬Òì³£´ıÌí¼Ó*/
+        std::cout << "Listen socket error.\n";
         closesocket(ListenSocket);
         WSACleanup();
     }
 
-    //__6.æ¥æ”¶å’Œå‘é€æ•°æ®
-    //æ¥æ”¶ï¼Œç›´åˆ°å¯¹æ–¹å…³é—­è¿æ¥
-    do {
-        iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
-        if (iResult > 0) {
-            std::cout << "Bytes received: "<< iResult << std::endl ;
 
-            //å°†ç¼“å†²åŒºå›ä¼ ç»™å‘é€æ–¹
-            iSendResult = send(ClientSocket, recvbuf, iResult, 0);
-            if (iSendResult == SOCKET_ERROR) {
-                /*å‘é€æ•°æ®å¤±è´¥,å¼‚å¸¸å¾…æ·»åŠ */
-                closesocket(ClientSocket);
-                WSACleanup();
-            }
-            std::cout << "Bytes sent:" << iSendResult << std::endl ;
-        } else if (iResult == 0){
-            /*è¿æ¥å·²æ–­å¼€,å¼‚å¸¸å¾…æ·»åŠ */
-        }
-        else {
-            /*æ¥æ”¶æ•°æ®å¤±è´¥,å¼‚å¸¸å¾…æ·»åŠ */
-            closesocket(ClientSocket);
-            WSACleanup();
-        }
-    } while (iResult > 0);
+    //__5.½ÓÊÜÀ´×Ô¿Í»§¶ËµÄÁ¬½Ó
+    //´´½¨ÃûÎªClientSocketµÄÁÙÊ±Ì×½Ó×Ö¶ÔÏó,ÒÔ½ÓÊÜÀ´×Ô¿Í»§¶ËµÄÁ¬½Ó
+    SOCKET ClientSocket = INVALID_SOCKET;
+    //¶ÔÓÚ¸ßĞÔÄÜ·şÎñÆ÷£¬Í¨³£Ê¹ÓÃ¶à¸öÏß³ÌÀ´´¦Àí¶à¸ö¿Í»§¶ËÁ¬½Ó
+    //ÓĞ¼¸ÖÖ²»Í¬µÄ±à³Ì¼¼ÊõÊ¹ÓÃWinsock,¿ÉÓÃÓÚÕìÌı¶à¸ö¿Í»§¶ËÁ¬½Ó
+    //Ò»ÖÖ±à³Ì·½·¨ÊÇ´´½¨Ò»¸öÁ¬ĞøÑ­»·,¸ÃÑ­»·Ê¹ÓÃlistenº¯Êı¼ì²éÁ¬½ÓÇëÇó
+    //Èç¹û³öÏÖÁ¬½ÓÇëÇó,Ó¦ÓÃ³ÌĞò½«µ÷ÓÃaccept,AcceptEx,WSAAccept º¯Êı
+    //²¢½«¹¤×÷´«µİµ½ÁíÒ»¸öÏß³ÌÀ´´¦ÀíÇëÇó
+    std::cout << "Wait to accept from client.\n";
+    ClientSocket = accept(ListenSocket, NULL, NULL);
+    if (ClientSocket == INVALID_SOCKET) {
+        /*½ÓÊÜ¿Í»§¶ËÊ§°Ü£¬Òì³£´ıÌí¼Ó*/
+        std::cout << "Accept socket error.\n";
+        closesocket(ListenSocket);
+        WSACleanup();
+    }
 
 
-    //__7.æ–­å¼€è¿æ¥
-    //å…³é—­å‘é€ä¸€åŠçš„è¿æ¥,å› ä¸ºæ²¡æœ‰æ›´å¤šçš„æ•°æ®å°†è¢«å‘é€
+
+
+
+
+    //__6.½ÓÊÕºÍ·¢ËÍÊı¾İ
+    //int iSendResult;
+    //char recvbuf[1024];//½ÓÊÕ»º³åÇø
+    //char sendbuf[1024];//·¢ËÍ»º³åÇø
+    //int recvbuflen = 1024;//»º³åÇø´óĞ¡
+
+    socketAndType* recvClient = new socketAndType;
+    (*recvClient).c     = ClientSocket;
+    (*recvClient).type  = 1;//½ÓÊÕÏß³Ì±êÊ¶
+    (*recvClient).index = 1;//¿Í»§¶Ë
+    //·şÎñÆ÷
+    socketAndType* sendClient = new socketAndType;
+    (*sendClient).c = ClientSocket;
+    (*sendClient).type = 2;//·¢ËÍÏß³Ì±êÊ¶
+    (*sendClient).index = 1;//·şÎñÆ÷
+
+    HANDLE hThread[2];//»ñÈ¡¾ä±ú
+    hThread[0] = CreateThread(NULL, 0,&transmmit , recvClient, 0, NULL);
+    hThread[1] = CreateThread(NULL, 0, &transmmit, sendClient, 0, NULL);
+
+    //µÈ´ıÏß³ÌÍê³É
+    WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
+
+    ////½ÓÊÕ£¬Ö±µ½¶Ô·½¹Ø±ÕÁ¬½Ó
+    //do {
+    //    iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
+    //    if (iResult > 0) {
+    //        std::cout << "Bytes received: " << iResult << std::endl;
+
+    //        //½«»º³åÇø»Ø´«¸ø·¢ËÍ·½
+    //        iSendResult = send(ClientSocket, recvbuf, iResult, 0);
+    //        if (iSendResult == SOCKET_ERROR) {
+    //            /*·¢ËÍÊı¾İÊ§°Ü,Òì³£´ıÌí¼Ó*/
+    //            closesocket(ClientSocket);
+    //            WSACleanup();
+    //        }
+    //        std::cout << "Bytes sent:" << iSendResult << std::endl;
+    //    }
+    //    else if (iResult == 0) {
+    //        /*Á¬½ÓÒÑ¶Ï¿ª,Òì³£´ıÌí¼Ó*/
+    //    }
+    //    else {
+    //        /*½ÓÊÕÊı¾İÊ§°Ü,Òì³£´ıÌí¼Ó*/
+    //        closesocket(ClientSocket);
+    //        WSACleanup();
+    //    }
+    //} while (iResult > 0);
+
+
+
+
+
+
+    //__7.¶Ï¿ªÁ¬½Ó
+    //¹Ø±Õ·¢ËÍÒ»°ëµÄÁ¬½Ó,ÒòÎªÃ»ÓĞ¸ü¶àµÄÊı¾İ½«±»·¢ËÍ
     iResult = shutdown(ClientSocket, SD_SEND);
     if (iResult == SOCKET_ERROR) {
-        /*æ–­å¼€å¥—æ¥å­—å¤±è´¥,å¼‚å¸¸å¾…æ·»åŠ */
+        /*¶Ï¿ªÌ×½Ó×ÖÊ§°Ü,Òì³£´ıÌí¼Ó*/
         closesocket(ClientSocket);
         WSACleanup();
     }
