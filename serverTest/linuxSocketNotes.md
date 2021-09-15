@@ -1,3 +1,4 @@
+#include <sys/socket.h>
 @brief socket函数：返回套接字
 @param int family:指名协议族
 	AF_INET		IPv4
@@ -23,6 +24,25 @@ SOCK_SEQPACKET	SCTP		SCTP		是
 SOCK_RAW		IPV4		IPv6					是			否
 
 
+#include <sys/socket.h>
 @brief connect函数：TCP客户端使用该函数来连接TCP服务器
 @param int sockfd:含有服务器ip端口的套接字描述符
-@param const
+@param const struct *servaddr:服务器套接字的地址结构指针
+@param socklen_t addrlen:服务器套接字的结构大小
+@return 成功则返回0，出错则返回-1
+出错可能的原因
+1.TCP客户端没有收到SYN分节相应，返回ETIMEDOUT
+2.若对客户的端的SYN的相应是RST(表示复位)，则表明该服务器主机在我们指定的端口上没有进程在等待与之连接
+3.客户端发出的SYN在中间的某个路由器上引发目的不可达的ICMP错误
+
+
+#include <sys/socket.h>
+@brief bind函数：把一个本地协议地址赋予给一个套接字
+@param int sockfd:
+@param const struct sockaddr *myaddr:
+@param socklen_t addrlen:
+@return 成功则返回0，出错则返回-1
+
+
+
+
