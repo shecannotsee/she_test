@@ -4,7 +4,7 @@
 ########################################################################################################################
 
 # src target
-set(generate_lib ON)
+set(generate_lib OFF)
 
 # test target
 set(test_name "${project_name}_test")
