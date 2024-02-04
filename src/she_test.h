@@ -5,6 +5,8 @@
 #ifndef SHE_TEST_H
 #define SHE_TEST_H
 
+#include "global_init.h"
+
 #include <utility>
 
 namespace she_test {
