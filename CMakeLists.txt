@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.11)
 # Project Settings                                                                                                     #
 ########################################################################################################################
 
-set(project_name "placeholder_name")
+set(project_name "she_test")
 PROJECT(${project_name}
         VERSION      0.0.1
         LANGUAGES    CXX
