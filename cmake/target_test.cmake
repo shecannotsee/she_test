@@ -8,9 +8,7 @@ file(GLOB_RECURSE TEST_SRC "${CMAKE_SOURCE_DIR}/test/*")
 # list(REMOVE_ITEM TEST_SRC "${CMAKE_SOURCE_DIR}/test/base.cpp")
 
 # test dependency
-set(test_dependency "-pthread"
-                    "-lgtest"
-                    "-lgmock" )
+set(test_dependency "-pthread")
 
 # test target
 if (generate_test STREQUAL "ON")

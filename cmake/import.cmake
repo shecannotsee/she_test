@@ -4,10 +4,10 @@
 ########################################################################################################################
 
 # include
-include_directories(${CMAKE_SOURCE_DIR}/third_party/googletest/include)
+include_directories()
 
 # lib
-link_directories(${CMAKE_SOURCE_DIR}/third_party/googletest/lib)
+link_directories()
 
 # Internal project
 include_directories(${CMAKE_SOURCE_DIR}/src)
