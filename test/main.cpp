@@ -3,12 +3,14 @@
 //
 #include <iostream>
 
-#include "global_init.h"
-#include "global_test_set.h"
+#include "she_test.h"
+#include "test_suite.h"
 
 int main() {
+  using namespace print_color;
   std::cout << GREEN_COLOR << "test start.\n" << RESET_COLOR;
 
+  she_test::test_suite::init();
   she_test::test_case_manager::init();
 
   std::cout << GREEN_COLOR << "test Done.\n" << RESET_COLOR;
