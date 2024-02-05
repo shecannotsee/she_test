@@ -5,6 +5,7 @@
 #ifndef T1_H
 #define T1_H
 
-void example_test();
+bool example_right_test();
+bool throw_test();
 
 #endif  // T1_H
