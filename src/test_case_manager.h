@@ -1,9 +1,5 @@
-//
-// Created by shecannotsee on 24-2-4.
-//
-
-#ifndef GLOBAL_INIT_H
-#define GLOBAL_INIT_H
+#ifndef TEST_CASE_MANAGER_H
+#define TEST_CASE_MANAGER_H
 
 #include <functional>
 #include <iostream>
@@ -12,11 +8,6 @@
 #include <vector>
 
 namespace she_test {
-enum class test_case_operator {
-  ADD,
-  RUN,
-  GET_ALL,
-};
 
 namespace test_case_manager {
 using std::function;
@@ -24,11 +15,16 @@ using std::pair;
 using std::string;
 using std::unordered_map;
 using std::vector;
+using namespace print_color;
 
-using test_function  = function<void()>;
+using test_function  = function<bool()>;
 using test_map       = unordered_map<string, test_function>;
 using test_suite_map = unordered_map<string, test_map>;
 static test_suite_map test_suites;
+
+static void add(const string& suite_name, const string& test_name, const test_function& test_func = nullptr) {
+  test_suites[suite_name][test_name] = test_func;
+}
 
 static vector<pair<string, string>> get_all_test_cases() {
   vector<pair<string, string>> all_test_cases;
@@ -52,13 +48,24 @@ static void run(const string& suite_name, const string& test_name) {
     test_map& testSuite = test_suites[suite_name];
     // run test func
     if (testSuite.find(test_name) != testSuite.end()) {
-      std::cout << "Running Test Case: " << suite_name << " - " << test_name << std::endl;
+      std::cout << YELLOW_COLOR << "[Ready to Running] >>> " << suite_name << " - " << test_name << "\n" << RESET_COLOR;
       const test_function& testFunc = testSuite[test_name];
+      // Run result processing
+      bool run_success = false;
       if (testFunc) {
-        testFunc();  // Run the test function
+        try {
+          run_success = testFunc();  // Run the test function
+        } catch (...) {
+          run_success = false;
+        }
       } else {
-        std::cout << "test function is nullptr;\n";
+        std::cout << RED_COLOR << "test function is nullptr\n" << RESET_COLOR;
       }
+      if (run_success)
+        std::cout << GREEN_COLOR << "[Running done,res] >>> SUCCESS\n\n" << RESET_COLOR;
+      else
+        std::cout << RED_COLOR << "[Running done,res] >>> FAILED\n\n" << RESET_COLOR;
+
     }
     // not found
     else {
@@ -80,12 +87,8 @@ static void init() {
   }
 }
 
-static void add(const string& suite_name, const string& test_name, const test_function& test_func = nullptr) {
-  test_suites[suite_name][test_name] = test_func;
-}
-
 }  // namespace test_case_manager
 
 }  // namespace she_test
 
-#endif  // GLOBAL_INIT_H
+#endif  // TEST_CASE_MANAGER_H
