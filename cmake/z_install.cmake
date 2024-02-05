@@ -16,10 +16,20 @@ install(TARGETS
     ${test_name} DESTINATION ${PROJECT_NAME}/bin
     )
 
+install(FILES
+        ${CMAKE_SOURCE_DIR}/src/she_test.h
+        ${CMAKE_SOURCE_DIR}/src/print_color.h
+        ${CMAKE_SOURCE_DIR}/src/test_case_manager.h
+        DESTINATION # to
+        ${PROJECT_NAME}/include # target dir
+)
+
 if (generate_lib STREQUAL "ON")
     # include install
     install(FILES
-        ${CMAKE_SOURCE_DIR}/src/base64.h # source head
+        ${CMAKE_SOURCE_DIR}/src/she_test.h
+            ${CMAKE_SOURCE_DIR}/src/print_color.h
+            ${CMAKE_SOURCE_DIR}/src/test_case_manager.h
         DESTINATION # to
         ${PROJECT_NAME}/include # target dir
         )
