@@ -2,8 +2,8 @@
 // Created by shecannotsee on 24-2-29.
 //
 
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef EASY_DEMO_TEST_MAIN_H
+#define EASY_DEMO_TEST_MAIN_H
 
 #include <easy_demo/register_test.h>
 
@@ -22,4 +22,4 @@ inline int run_test() {
 
 }  // namespace easy_demo_test
 
-#endif  // MAIN_H
+#endif  // EASY_DEMO_TEST_MAIN_H
