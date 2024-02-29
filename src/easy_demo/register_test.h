@@ -8,9 +8,6 @@
 #include <functional>
 #include <vector>
 
-using test_function = std::function<void()>;
-class test_manager;
-
 // 定义一个宏，用于注册测试函数
 #define REGISTER_TEST(test_name)                              \
   void test_name##_test_function();                           \
@@ -25,27 +22,36 @@ class test_manager;
 
 class test_manager {
  public:
-  // 注册测试函数的静态方法
-  static void register_test(test_function testFunction) {
+  // copy:off
+  test_manager(const test_manager&)            = delete;
+  test_manager& operator=(const test_manager&) = delete;
+  // move:off
+  test_manager(test_manager&&)            = delete;
+  test_manager& operator=(test_manager&&) = delete;
+
+ public:
+  // register test function
+  static void register_test(std::function<void()> testFunction) {
     instance().tests.push_back(testFunction);
   }
 
-  // 运行所有注册的测试函数
+  // run
   static void run_all_tests() {
     for (auto test : instance().tests) {
-      test();  // 调用测试函数
+      test();  // call test function
     }
   }
 
  private:
-  // 单例模式，保证唯一实例
+  test_manager() = default;
+
   static test_manager& instance() {
     static test_manager instance;
     return instance;
   }
 
-  // 存储注册的测试函数
-  std::vector<test_function> tests;
+  // test table
+  std::vector<std::function<void()>> tests;
 };
 
 #endif //REGISTER_TEST_H
