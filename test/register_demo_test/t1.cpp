@@ -2,7 +2,7 @@
 // Created by shecannotsee on 24-2-29.
 //
 
-#include <easy_demo/register_test.h>
+#include <register_demo/register_demo.h>
 
 #include <iostream>
 
@@ -17,7 +17,7 @@ void test_expansion_test_function();
 namespace {
 struct test_expansion_register {
   test_expansion_register() {
-    test_manager::register_test(test_expansion_test_function);
+    testing_only::register_demo::register_test(test_expansion_test_function);
   }
 } test_expansion_register_instance;
 }  // namespace

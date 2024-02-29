@@ -2,7 +2,7 @@
 // Created by shecannotsee on 24-2-29.
 //
 
-#include <easy_demo/register_test.h>
+#include <register_demo/register_demo.h>
 
 #include <iostream>
 
