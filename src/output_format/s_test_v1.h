@@ -11,12 +11,13 @@ namespace output_format {
 
 class s_test_v1 {
  private:
-
  public:
   s_test_v1() {
   }
   ~s_test_v1() {
   }
+
+ public:
 };
 
 }  // namespace output_format
