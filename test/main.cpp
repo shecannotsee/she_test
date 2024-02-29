@@ -7,6 +7,7 @@
 
 #include <iostream>
 
+#include "output_format_test/main.h"
 #include "register_test_cases_test/main.h"
 #include "test_case_manager_test/main.h"
 
@@ -14,5 +15,6 @@ int main() {
   easy_demo_test::run_test();
   test_case_manager_test::run_test();
   register_test_cases_test::run_test();
+  output_format_test::run_test();
   return 0;
 }
