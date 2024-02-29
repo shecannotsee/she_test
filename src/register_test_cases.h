@@ -44,7 +44,7 @@ class register_center {
  private:
   register_center() = default;
 
-  static register_center& get_instance() {
+  static auto get_instance() -> register_center& {
     static register_center instance;
     return instance;
   }
@@ -53,7 +53,9 @@ class register_center {
   test_case_manager::test_suite_map tests;
 
  public:
-  static void add_test(const std::string& suite_name, const std::string& test_name, const test_function& test_func = nullptr) {
+  static void add_test(const std::string& suite_name,
+                       const std::string& test_name,
+                       const test_function& test_func = nullptr) {
     get_instance().tests[suite_name][test_name] = test_func;
   }
 
@@ -67,7 +69,7 @@ class register_center {
   }
 
  private:
-  static vector<pair<string, string>> get_all_test_cases() {
+  static auto get_all_test_cases() -> vector<pair<string, string>> {
     vector<pair<string, string>> all_test_cases;
 
     for (const auto& suite : get_instance().tests) {
