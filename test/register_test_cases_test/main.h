@@ -9,7 +9,7 @@
 
 namespace register_test_cases_test {
 
-int run_test() {
+inline int run_test() {
   std::cout << "register_test_cases_test start.\n";
   she_test::details::register_center::init();
   std::cout << "register_test_cases_test done.\n";

@@ -8,7 +8,7 @@
 
 namespace test_case_manager_test {
 
-int run_test() {
+inline int run_test() {
   std::cout << "test_case_manager_test start.\n";
 
   she_test::test_case_manager::add("zzz", "yyy", []() {
