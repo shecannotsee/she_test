@@ -126,4 +126,15 @@ class register_center {
 }  // namespace details
 }  // namespace she_test
 
+#define SHE_TEST(test_suite_name, test_name)                                                 \
+  namespace test_suite_name {                                                                \
+  bool test_name();                                                                          \
+  struct test_name##_register {                                                              \
+    test_name##_register() {                                                                 \
+      she_test::details::register_center::add_test(#test_suite_name, #test_name, test_name); \
+    }                                                                                        \
+  } test_name##_instance;                                                                    \
+  }                                                                                          \
+  bool test_suite_name::test_name()
+
 #endif  // REGISTER_TEST_CASES_H
