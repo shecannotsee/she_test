@@ -6,16 +6,22 @@
 
 #include <iostream>
 
-void aaaaaa_TestFunction();
+// REGISTER_TEST(test_expansion) {
+//   std::cout << "test_expansion\n";
+// }
+
+// This macro is equivalent to the following code
+
+void test_expansion_test_function();
 
 namespace {
-struct aaaaaaRegister {
-  aaaaaaRegister() {
-    test_manager::register_test(aaaaaa_TestFunction);
+struct test_expansion_register {
+  test_expansion_register() {
+    test_manager::register_test(test_expansion_test_function);
   }
-} aaaaaaRegisterInstance;
+} test_expansion_register_instance;
 }  // namespace
 
-void aaaaaa_TestFunction() {
-  std::cout << "aaaaa\n";
+void test_expansion_test_function() {
+  std::cout << "Running test_expansion...\n";
 }

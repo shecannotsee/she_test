@@ -6,17 +6,10 @@
 
 #include <iostream>
 
-// 使用宏注册测试函数
-REGISTER_TEST(MyTestCase) {
-  // 进行测试
-  std::cout << "Running MyTestCase..." << std::endl;
-  // 添加测试代码
-  // 比如：ASSERT_EQ(2 + 2, 4);
+REGISTER_TEST(my_test_case) {
+  std::cout << "Running my_test_case..." << std::endl;
 }
 
-REGISTER_TEST(AnotherTestCase) {
-  // 进行测试
-  std::cout << "Running AnotherTestCase..." << std::endl;
-  // 添加测试代码
-  // 比如：ASSERT_TRUE(some_condition);
+REGISTER_TEST(another_test_case) {
+  std::cout << "Running another_test_case..." << std::endl;
 }

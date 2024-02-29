@@ -12,16 +12,16 @@ using test_function = std::function<void()>;
 class test_manager;
 
 // 定义一个宏，用于注册测试函数
-#define REGISTER_TEST(TestName)                             \
-  void TestName##_TestFunction();                           \
-  namespace {                                               \
-  struct TestName##Register {                               \
-    TestName##Register() {                                  \
-      test_manager::register_test(TestName##_TestFunction); \
-    }                                                       \
-  } TestName##RegisterInstance;                             \
-  }                                                         \
-  void TestName##_TestFunction()
+#define REGISTER_TEST(test_name)                              \
+  void test_name##_test_function();                           \
+  namespace {                                                 \
+  struct test_name##_register {                               \
+    test_name##_register() {                                  \
+      test_manager::register_test(test_name##_test_function); \
+    }                                                         \
+  } test_name##_register_instance;                            \
+  }                                                           \
+  void test_name##_test_function()
 
 class test_manager {
  public:
