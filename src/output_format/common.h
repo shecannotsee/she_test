@@ -23,6 +23,7 @@ struct test_info {
   integer_type failed_tests{0};
   integer_type total_number_of_suites{1};
   std::string module_name{"gtest_module"};
+  virtual ~test_info() = default;
 
   virtual void READY_TO_RACE(const std::string&, const std::string&, const details::test_function&) noexcept = 0;
 
