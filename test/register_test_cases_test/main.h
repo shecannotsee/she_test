@@ -11,7 +11,7 @@ namespace register_test_cases_test {
 
 inline int run_test() {
   std::cout << "register_test_cases_test start.\n";
-  she_test::details::register_center::init();
+  she_test::details::register_center::init_and_run();
   std::cout << "register_test_cases_test done.\n";
   return 0;
 }

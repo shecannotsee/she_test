@@ -57,7 +57,7 @@ class register_center {
     get_instance().tests[suite_name][test_name] = test_func;
   }
 
-  static void init() {
+  static void init_and_run() {
     const auto all_test_cases = get_all_test_cases();
     for (const auto& test_case : all_test_cases) {
       const std::string& suite_name = test_case.first;
