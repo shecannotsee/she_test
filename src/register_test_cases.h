@@ -11,8 +11,6 @@
 #include <unordered_map>
 #include <vector>
 
-#include "test_case_manager.h"
-
 namespace she_test {
 
 namespace details {
@@ -50,7 +48,7 @@ class register_center {
   }
 
   // test table
-  test_case_manager::test_suite_map tests;
+  test_suite_map tests;
 
  public:
   static void add_test(const std::string& suite_name,
