@@ -7,10 +7,22 @@
 
 #include <output_format/gtest_format.h>
 
+#include <thread>
+
 namespace output_format_test {
 
 inline int run_test() {
   she_test::output_format::gtest t;
+  t.READY_TO_RACE("output_format_test", "true", []() -> bool {
+    std::cout << "running...\n";
+    return true;
+  });
+  t.READY_TO_RACE("output_format_test", "false", []() -> bool {
+    std::cout << "ready to sleep...\n";
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    return false;
+  });
+
   return 0;
 }
 
