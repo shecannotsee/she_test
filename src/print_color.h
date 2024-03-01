@@ -5,12 +5,12 @@
 
 namespace she_test {
 namespace print_color {
-const char* RESET_COLOR          = "[0m";
-const char* RED_COLOR            = "[31m";
-const char* GREEN_COLOR          = "[32m";
-const char* YELLOW_COLOR         = "[33m";
-const char* PURPLE_COLOR         = "[35m";
-const char* BLUE_COLOR           = "[34m";
+static const char* RESET_COLOR   = "[0m";
+static const char* RED_COLOR     = "[31m";
+static const char* GREEN_COLOR   = "[32m";
+static const char* YELLOW_COLOR  = "[33m";
+static const char* PURPLE_COLOR  = "[35m";
+static const char* BLUE_COLOR    = "[34m";
 const std::string RESET_COLOR_S  = "[0m";
 const std::string RED_COLOR_S    = "[31m";
 const std::string GREEN_COLOR_S  = "[32m";
