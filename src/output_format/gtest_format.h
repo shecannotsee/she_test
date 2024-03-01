@@ -49,8 +49,9 @@ class gtest : public common::test_info<> {
     // Record execution time
     const auto start = std::chrono::high_resolution_clock::now();
     run_and_check(waiting_to_run);
-    const auto end             = std::chrono::high_resolution_clock::now();
-    std::string durationString = std::to_string(((end - start)).count()) + "ms";
+    const auto end                   = std::chrono::high_resolution_clock::now();
+    const auto duration              = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    const std::string durationString = std::to_string(duration.count()) + "ms";
     msg += "(" + durationString + ")";
     if (now_failed_tests != failed_tests) {
       // failed
