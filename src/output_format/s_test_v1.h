@@ -30,20 +30,19 @@ class s_test_v1 : public common::test_info<> {
     using namespace common;
     int now_failed_tests = failed_tests;
     std::string msg      = test_suite_name + ", " + test_name;
-    colorful_ln("[ RUN      ] ", msg, GREEN_COLOR);
+    colorful_ln("[READY TO RACE...] >>>  " + msg, YELLOW_COLOR);
     // Record execution time
     const auto start = std::chrono::high_resolution_clock::now();
     run_and_check(waiting_to_run);
-    const auto end                   = std::chrono::high_resolution_clock::now();
-    const auto duration              = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    const std::string durationString = std::to_string(duration.count()) + "ms";
-    msg += "(" + durationString + ")";
+    const auto end                 = std::chrono::high_resolution_clock::now();
+    const auto duration            = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    const std::string consume_time = std::to_string(duration.count()) + "ms";
     if (now_failed_tests != failed_tests) {
       // failed
-      colorful_ln("[  FAILED  ] ", msg, RED_COLOR);
+      colorful_ln("[Running done    ] >>> FAILED  >>> ", consume_time, RED_COLOR);
     } else {
       // success
-      colorful_ln("[       OK ] ", msg, GREEN_COLOR);
+      colorful_ln("[Running done    ] >>> SUCCESS >>> ", consume_time, GREEN_COLOR);
     }
   }
 

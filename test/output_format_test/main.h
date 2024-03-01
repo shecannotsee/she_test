@@ -9,19 +9,36 @@
 
 #include <thread>
 
+#include "output_format/s_test_v1.h"
+
 namespace output_format_test {
 
 inline int run_test() {
-  she_test::output_format::gtest t;
-  t.READY_TO_RACE("output_format_test", "true", []() -> bool {
-    std::cout << "running...\n";
-    return true;
-  });
-  t.READY_TO_RACE("output_format_test", "false", []() -> bool {
-    std::cout << "ready to sleep...\n";
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    return false;
-  });
+  {
+    she_test::output_format::gtest t1;
+    t1.READY_TO_RACE("gtest_format", "true", []() -> bool {
+      std::cout << "running...\n";
+      return true;
+    });
+    t1.READY_TO_RACE("gtest_format", "false", []() -> bool {
+      std::cout << "ready to sleep...\n";
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      return false;
+    });
+  }
+  {
+    she_test::output_format::s_test_v1 t2;
+
+    t2.READY_TO_RACE("s_test_v1_format", "true", []() -> bool {
+      std::cout << "running...\n";
+      return true;
+    });
+    t2.READY_TO_RACE("s_test_v1_format", "false", []() -> bool {
+      std::cout << "ready to sleep...\n";
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      return false;
+    });
+  }
 
   return 0;
 }

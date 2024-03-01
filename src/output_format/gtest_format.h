@@ -33,7 +33,7 @@ class gtest : public common::test_info<> {
     colorful("[==========] ", GREEN_COLOR);
     printf("%d tests from %d test suites ran. (0 ms total)\n", total_number_of_tests, total_number_of_suites);
     colorful("[  PASSED  ] ", GREEN_COLOR);
-    printf("%d tests", total_number_of_tests - failed_tests);
+    printf("%d tests\n\n", total_number_of_tests - failed_tests);
     if (failed_tests) {
       // failed info
     }
