@@ -30,7 +30,7 @@ class s_test_v1 : public common::test_info<> {
                      const test_function& waiting_to_run) noexcept override {
     using namespace common;
     int now_failed_tests = failed_tests;
-    std::string msg      = test_suite_name + ", " + test_name;
+    std::string msg      = test_suite_name + " - " + test_name;
     colorful_ln("[READY TO RACE... ] >>>  " + msg, YELLOW_COLOR);
     // Record execution time
     const auto start = std::chrono::high_resolution_clock::now();
