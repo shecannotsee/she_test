@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "print_color.h"
+
 namespace she_test {
 
 namespace test_case_manager {
@@ -48,7 +50,7 @@ static void run(const string& suite_name, const string& test_name) {
     test_map& testSuite = test_suites[suite_name];
     // run test func
     if (testSuite.find(test_name) != testSuite.end()) {
-      std::cout << YELLOW_COLOR << "[Ready to Running] >>> " << suite_name << " - " << test_name << "\n" << RESET_COLOR;
+      std::cout << YELLOW_COLOR_S << "[Ready to Running] >>> " << suite_name << " - " << test_name << "\n" << RESET_COLOR_S;
       const test_function& testFunc = testSuite[test_name];
       // Run result processing
       bool run_success = false;
@@ -59,12 +61,12 @@ static void run(const string& suite_name, const string& test_name) {
           run_success = false;
         }
       } else {
-        std::cout << RED_COLOR << "test function is nullptr\n" << RESET_COLOR;
+        std::cout << RED_COLOR_S << "test function is nullptr\n" << RESET_COLOR_S;
       }
       if (run_success)
-        std::cout << GREEN_COLOR << "[Running done,res] >>> SUCCESS\n\n" << RESET_COLOR;
+        std::cout << GREEN_COLOR_S << "[Running done,res] >>> SUCCESS\n\n" << RESET_COLOR_S;
       else
-        std::cout << RED_COLOR << "[Running done,res] >>> FAILED\n\n" << RESET_COLOR;
+        std::cout << RED_COLOR_S << "[Running done,res] >>> FAILED\n\n" << RESET_COLOR_S;
 
     }
     // not found
