@@ -15,6 +15,9 @@ void check();
 inline int run() {
   using namespace she_test;
   check();
+  CHECK_EQUAL(1,2);
+  CHECK_EQUAL("123","123");
+  CHECK_EQUAL(1,2);
   return 0;
 }
 

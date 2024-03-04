@@ -6,7 +6,6 @@
 #define SHE_TEST_EQUAL_H
 
 #include <iostream>
-#include <type_traits>
 
 namespace she_test {
 
@@ -37,6 +36,13 @@ bool check_equal(T&& first, T&& second, Args&&... args) {
 }
 
 #endif
+
+#define CHECK_EQUAL(...)                                              \
+  {                                                                   \
+    if (!she_test::check_equal<decltype(__VA_ARGS__)>(__VA_ARGS__)) { \
+      printf("%s:%d\n", __FILE__, __LINE__);                          \
+    }                                                                 \
+  }
 
 }  // namespace she_test
 
