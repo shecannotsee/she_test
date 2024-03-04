@@ -9,6 +9,7 @@
 
 #include "output_format_test/main.h"
 #include "register_test_cases_test/main.h"
+#include "template_support_test/start_test.h"
 #include "test_case_manager_test/main.h"
 
 int main() {
@@ -16,5 +17,6 @@ int main() {
   test_case_manager_test::run_test();
   register_test_cases_test::run_test();
   output_format_test::run_test();
+  template_support_test::run();
   return 0;
 }
