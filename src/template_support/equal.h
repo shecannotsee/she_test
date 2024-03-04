@@ -13,7 +13,7 @@ namespace she_test {
 #if __cplusplus >= 201703L  // standard >= c++17
 
 template <typename T, typename... Args>
-bool check_equal(const T& first, const Args&... args) {
+bool check_equal(T&& first, Args&&... args) {
   static_assert(sizeof...(Args) >= 1, "At least two arguments required.");
   return ((first == args) && ...);  // check
 }
@@ -21,18 +21,18 @@ bool check_equal(const T& first, const Args&... args) {
 #elif __cplusplus >= 201103L  // standard >= c++11 && standard < c++17
 
 template <typename T>
-bool check_equal(const T& first) {
+bool check_equal(T&& first) {
   static_assert(sizeof(T) != sizeof(T), "At least two arguments required.");
   return false;
 }
 
 template <typename T>
-bool check_equal(const T& first, const T& second) {
+bool check_equal(T&& first, T&& second) {
   return first == second;  // 检查两个值是否相等
 }
 
 template <typename T, typename... Args>
-bool check_equal(const T& first, const T& second, const Args&... args) {
+bool check_equal(T&& first, T&& second, Args&&... args) {
   return first == second && check_equal(first, args...);  //
 }
 
