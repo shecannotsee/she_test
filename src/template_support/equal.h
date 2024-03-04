@@ -28,7 +28,7 @@ bool check_equal(T&& first) {
 
 template <typename T>
 bool check_equal(T&& first, T&& second) {
-  return first == second;  // 检查两个值是否相等
+  return first == second;  // check
 }
 
 template <typename T, typename... Args>
