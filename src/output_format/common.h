@@ -22,6 +22,7 @@ struct test_info {
   integer_type total_number_of_tests{1};
   integer_type failed_tests{0};
   integer_type total_number_of_suites{1};
+  integer_type total_time{0};
   std::string module_name{"gtest_module"};
   virtual ~test_info() = default;
 

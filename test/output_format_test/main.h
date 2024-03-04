@@ -9,7 +9,7 @@
 
 #include <thread>
 
-#include "output_format/s_test_v1.h"
+#include "output_format/she_test_v1.h"
 
 namespace output_format_test {
 
@@ -27,7 +27,7 @@ inline int run_test() {
     });
   }
   {
-    she_test::output_format::s_test_v1 t2;
+    she_test::output_format::she_test_v1 t2;
 
     t2.READY_TO_RACE("s_test_v1_format", "true", []() -> bool {
       std::cout << "running...\n";
