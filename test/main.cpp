@@ -5,14 +5,13 @@
 
 #include <she_test.h>
 
-#include <iostream>
-
 #include "output_format_test/main.h"
 #include "register_test_cases_test/main.h"
 #include "template_support_test/start_test.h"
 #include "test_case_manager_test/main.h"
 
-int main() {
+int main(int argc, char** argv) {
+  she_test::command_line::getInstance().parse(argc, argv);
   easy_demo_test::run_test();
   test_case_manager_test::run_test();
   register_test_cases_test::run_test();
