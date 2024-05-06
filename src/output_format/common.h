@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "../print_color.h"
+#include "test_case_registry/test_case.h"
 
 namespace she_test {
 
