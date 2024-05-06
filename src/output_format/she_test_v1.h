@@ -1,9 +1,5 @@
-//
-// Created by shecannotsee on 24-2-29.
-//
-
-#ifndef S_TEST_V1_H
-#define S_TEST_V1_H
+#ifndef SHE_TEST_S_TEST_V1_H
+#define SHE_TEST_S_TEST_V1_H
 #include <chrono>
 #include <functional>
 
@@ -77,4 +73,4 @@ class she_test_v1 : public common::test_info<> {
 
 }  // namespace she_test
 
-#endif  // S_TEST_V1_H
+#endif  // SHE_TEST_S_TEST_V1_H

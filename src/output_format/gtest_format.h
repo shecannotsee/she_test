@@ -1,9 +1,5 @@
-//
-// Created by shecannotsee on 24-2-29.
-//
-
-#ifndef GTEST_FORMAT_H
-#define GTEST_FORMAT_H
+#ifndef SHE_TEST_GTEST_FORMAT_H
+#define SHE_TEST_GTEST_FORMAT_H
 
 #include <chrono>
 
@@ -80,4 +76,4 @@ class gtest : public common::test_info<> {
 
 }  // namespace she_test
 
-#endif  // GTEST_FORMAT_H
+#endif  // SHE_TEST_GTEST_FORMAT_H

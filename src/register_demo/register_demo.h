@@ -1,14 +1,14 @@
-//
-// Created by shecannotsee on 24-2-29.
-//
+/*
+ * The file is just a simple example
+ */
 
-#ifndef REGISTER_TEST_H
-#define REGISTER_TEST_H
+#ifndef SHE_TEST_REGISTER_TEST_H
+#define SHE_TEST_REGISTER_TEST_H
 
 #include <functional>
 #include <vector>
 
-// 定义一个宏，用于注册测试函数
+// just to show how to register
 #define REGISTER_TEST(test_name)                                             \
   void test_name##_test_function();                                          \
   namespace {                                                                \
@@ -55,6 +55,6 @@ class register_demo {
   // test table
   std::vector<std::function<void()>> tests;
 };
-}
+}  // namespace testing_only
 
-#endif //REGISTER_TEST_H
+#endif  // SHE_TEST_REGISTER_TEST_H

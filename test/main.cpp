@@ -5,6 +5,7 @@
 
 #include <she_test.h>
 
+#include "command_line_parse_test/main.h"
 #include "output_format_test/main.h"
 #include "register_test_cases_test/main.h"
 #include "template_support_test/start_test.h"

@@ -1,9 +1,5 @@
-//
-// Created by shecannotsee on 24-4-26.
-//
-
-#ifndef COMMAND_LINE_H
-#define COMMAND_LINE_H
+#ifndef SHE_TEST_COMMAND_LINE_H
+#define SHE_TEST_COMMAND_LINE_H
 
 #include <vector>
 
@@ -38,4 +34,4 @@ class command_line {
 
 }  // namespace she_test
 
-#endif  // COMMAND_LINE_H
+#endif  // SHE_TEST_COMMAND_LINE_H

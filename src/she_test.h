@@ -1,7 +1,3 @@
-//
-// Created by shecannotsee on 24-2-4.
-//
-
 #ifndef SHE_TEST_H
 #define SHE_TEST_H
 

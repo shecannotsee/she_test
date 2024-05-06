@@ -1,7 +1,3 @@
-//
-// Created by shecannotsee on 24-2-29.
-//
-
 #ifndef OUTPUT_FORMAT_COMMON_H
 #define OUTPUT_FORMAT_COMMON_H
 
