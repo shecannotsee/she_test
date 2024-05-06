@@ -7,7 +7,6 @@
 
 #include <register_demo/register_demo.h>
 
-#include <iostream>
 #include "../test_support.h"
 
 namespace easy_demo_test {
