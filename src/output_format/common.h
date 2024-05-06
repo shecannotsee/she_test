@@ -11,6 +11,21 @@ namespace output_format {
 
 namespace common {
 
+using namespace print_color;
+
+static void colorful(const std::string& str1, const char* color = RESET_COLOR) {
+  printf("%s%s%s", color, str1.c_str(), RESET_COLOR);
+}
+static void colorful(const std::string& str1, const std::string& str2, const char* color = RESET_COLOR) {
+  printf("%s%s%s%s", color, str1.c_str(), RESET_COLOR, str2.c_str());
+}
+static void colorful_ln(const std::string& str, const char* color = RESET_COLOR) {
+  printf("%s%s%s\n", color, str.c_str(), RESET_COLOR);
+}
+static void colorful_ln(const std::string& str, const std::string& str2, const char* color = RESET_COLOR) {
+  printf("%s%s%s%s\n", color, str.c_str(), RESET_COLOR, str2.c_str());
+}
+
 template <typename integer_type = int>
 struct test_info {
   static_assert(std::is_integral<integer_type>::value, "integer_type must be an integral type");
@@ -22,28 +37,29 @@ struct test_info {
   std::string module_name{"gtest_module"};
   virtual ~test_info() = default;
 
+  // I love KTM-R2R!
   virtual void READY_TO_RACE(const std::string&, const std::string&, const details::test_function&) noexcept = 0;
 
- private:
-  virtual void run_and_check(const details::test_function&) = 0;
+  virtual void NO_TEST_SUITE(const std::string& suite_name) noexcept = 0;
+
+  virtual void NO_TEST_CASE(const std::string& test_name) noexcept = 0;
+
+  /*
+   * @return return millseconds
+   */
+  virtual int run_and_check(const details::test_function& waiting_to_run) {
+    if (waiting_to_run) {
+      const auto start = std::chrono::high_resolution_clock::now();
+      if (!waiting_to_run()) {
+        ++failed_tests;
+      }
+      const auto end      = std::chrono::high_resolution_clock::now();
+      const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+      return duration.count();
+    }
+    return 0;
+  }
 };
-
-using namespace print_color;
-
-static void colorful(const std::string& str1, const char* color = RESET_COLOR) {
-  printf("%s%s%s", color, str1.c_str(), RESET_COLOR);
-}
-static void colorful(const std::string& str1, const std::string& str2, const char* color = RESET_COLOR) {
-  printf("%s%s%s%s", color, str1.c_str(), RESET_COLOR, str2.c_str());
-}
-
-static void colorful_ln(const std::string& str, const char* color = RESET_COLOR) {
-  printf("%s%s%s\n", color, str.c_str(), RESET_COLOR);
-}
-
-static void colorful_ln(const std::string& str, const std::string& str2, const char* color = RESET_COLOR) {
-  printf("%s%s%s%s\n", color, str.c_str(), RESET_COLOR, str2.c_str());
-}
 
 }  // namespace common
 

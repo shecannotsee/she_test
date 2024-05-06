@@ -4,20 +4,18 @@
 
 #ifndef TEST_CASE_MANAGER_TEST_MAIN_H
 #define TEST_CASE_MANAGER_TEST_MAIN_H
+#include "../test_support.h"
 #include "she_test.h"
 
 namespace test_case_manager_test {
 
 inline int run_test() {
-  std::cout << "test_case_manager_test start.\n";
+  test_support _("test_case_manager_test");
 
-  she_test::test_case_manager::add("zzz", "yyy", []() {
-    return true;
-  });
+  she_test::test_case_manager::add("zzz", "yyy", []() { return true; });
 
   she_test::test_case_manager::init();
 
-  std::cout << "test_case_manager_test done.\n";
   return 0;
 }
 

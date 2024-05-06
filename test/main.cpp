@@ -17,6 +17,6 @@ int main(int argc, char** argv) {
   test_case_manager_test::run_test();
   register_test_cases_test::run_test();
   output_format_test::run_test();
-  template_support_test::run();
+  template_support_test::run_test();
   return 0;
 }

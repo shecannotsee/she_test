@@ -8,15 +8,15 @@
 #include <register_demo/register_demo.h>
 
 #include <iostream>
+#include "../test_support.h"
 
 namespace easy_demo_test {
 
 inline int run_test() {
-  std::cout << "easy_demo_test start.\n";
+  test_support _("easy_demo_test: register_demo");
 
   testing_only::register_demo::run_all_tests();
 
-  std::cout << "easy_demo_test Done.\n";
   return 0;
 }
 

@@ -10,12 +10,10 @@ namespace she_test {
 
 namespace output_format {
 
-using namespace print_color;
-using test_function = std::function<bool()>;
-
 class gtest : public common::test_info<> {
  public:
   gtest() : test_info() {
+    using namespace print_color;
     using namespace common;
     colorful("[==========] ", GREEN_COLOR);
     printf("Running %d tests from %d test suites.\n", total_number_of_tests, total_number_of_suites);
@@ -24,6 +22,7 @@ class gtest : public common::test_info<> {
     printf("%d tests from %s\n\n", total_number_of_tests, module_name.c_str());
   }
   ~gtest() override {
+    using namespace print_color;
     using namespace common;
     colorful_ln("\n[----------] ", "Global test environment tear-down.", GREEN_COLOR);
     colorful("[==========] ", GREEN_COLOR);
@@ -36,20 +35,26 @@ class gtest : public common::test_info<> {
     }
   }
 
+  virtual void NO_TEST_SUITE(const std::string& suite_name) noexcept {
+  }
+
+  virtual void NO_TEST_CASE(const std::string& test_name) noexcept {
+  }
+
   void READY_TO_RACE(const std::string& test_suite_name,
                      const std::string& test_name,
-                     const test_function& waiting_to_run) noexcept override {
+                     const details::test_function& waiting_to_run) noexcept override {
     using namespace common;
+    using namespace print_color;
     int now_failed_tests = failed_tests;
     std::string msg      = test_suite_name + ", " + test_name;
     colorful_ln("[ RUN      ] ", msg, GREEN_COLOR);
+
     // Record execution time
-    const auto start = std::chrono::high_resolution_clock::now();
-    run_and_check(waiting_to_run);
-    const auto end      = std::chrono::high_resolution_clock::now();
-    const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    total_time += duration.count();
-    const std::string durationString = std::to_string(duration.count()) + "ms";
+    auto using_times = run_and_check(waiting_to_run);
+    total_time += using_times;
+
+    const std::string durationString = std::to_string(using_times) + "ms";
     msg += "(" + durationString + ")";
     if (now_failed_tests != failed_tests) {
       // failed
@@ -57,17 +62,6 @@ class gtest : public common::test_info<> {
     } else {
       // success
       colorful_ln("[       OK ] ", msg, GREEN_COLOR);
-    }
-  }
-
- private:
-  void run_and_check(const test_function& waiting_to_run) override {
-    if (waiting_to_run) {
-      if (!waiting_to_run()) {
-        failed_tests++;
-      }
-    } else {
-      common::colorful_ln("no function to run", RED_COLOR);
     }
   }
 };

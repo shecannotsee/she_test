@@ -9,11 +9,14 @@
 
 #include <thread>
 
+#include "../test_support.h"
 #include "output_format/she_test_v1.h"
 
 namespace output_format_test {
 
 inline int run_test() {
+  test_support _("output_format_test");
+
   {
     she_test::output_format::gtest t1;
     t1.READY_TO_RACE("gtest_format", "true", []() -> bool {
@@ -21,7 +24,7 @@ inline int run_test() {
       return true;
     });
     t1.READY_TO_RACE("gtest_format", "false", []() -> bool {
-      std::cout << "ready to sleep...\n";
+      std::cout << "ready to sleep...(set 1 second)\n";
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
       return false;
     });
@@ -34,7 +37,7 @@ inline int run_test() {
       return true;
     });
     t2.READY_TO_RACE("s_test_v1_format", "false", []() -> bool {
-      std::cout << "ready to sleep...\n";
+      std::cout << "ready to sleep...(set 1 second)\n";
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
       return false;
     });

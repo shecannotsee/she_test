@@ -7,12 +7,16 @@
 #include <string>
 
 #include "template_support/equal.h"
+#include "../test_support.h"
+
 
 namespace template_support_test {
 
 void check();
 
-inline int run() {
+inline int run_test() {
+  test_support _("template_support_test");
+
   using namespace she_test;
   check();
   CHECK_EQUAL(1,2);
