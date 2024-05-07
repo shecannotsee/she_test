@@ -8,8 +8,11 @@ set(CMAKE_INSTALL_PREFIX "./")
 # Release Code
 # set(CMAKE_INSTALL_PREFIX "/")
 
+message(STATUS "[Please note....]")
 message(STATUS "The default installation path is ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Please use \"make install DESTDIR=./PATH\" to set install path")
+message(STATUS "[............end]")
+
 
 # test install
 install(TARGETS
