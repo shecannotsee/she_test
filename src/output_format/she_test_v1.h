@@ -57,7 +57,6 @@ class she_test_v1 : public common::test_info<> {
   void READY_TO_RACE(const std::string& test_suite_name,
                      const std::string& test_name,
                      const test_function& waiting_to_run) noexcept override {
-    ++total_number_of_tests;
     using namespace common;
     int now_failed_tests = failed_tests;
     std::string msg      = test_suite_name + " - " + test_name;
