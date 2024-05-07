@@ -78,46 +78,46 @@ void exec(std::vector<she_test::details::parame_packages> ops) {
 inline int run_test() {
   test_support _("command_line_parse_test");
   /* version */ {
-    int argc = 2;
-    char* argv[]{"she_test_test", "-version"};
-    she_test::command_line::getInstance().parse(argc, argv);
-    exec(she_test::command_line::getInstance().get_ops());
+    constexpr int argc = 2;
+    const char* argv[]{"she_test_test", "-version"};
+    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::command_line::get_instance().get_ops());
   }
   /* help */ {
-    int argc = 2;
-    char* argv[]{"she_test_test", "-help"};
-    she_test::command_line::getInstance().parse(argc, argv);
-    exec(she_test::command_line::getInstance().get_ops());
+    constexpr int argc = 2;
+    const char* argv[]{"she_test_test", "-help"};
+    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::command_line::get_instance().get_ops());
   }
   /* list */ {
-    int argc = 2;
-    char* argv[]{"she_test_test", "-list"};
-    she_test::command_line::getInstance().parse(argc, argv);
-    exec(she_test::command_line::getInstance().get_ops());
+    constexpr int argc = 2;
+    const char* argv[]{"she_test_test", "-list"};
+    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::command_line::get_instance().get_ops());
   }
   /* list */ {
-    int argc = 4;
-    char* argv[]{"she_test_test", "-run", "s1.t1", "s1.t2"};
-    she_test::command_line::getInstance().parse(argc, argv);
-    exec(she_test::command_line::getInstance().get_ops());
+    constexpr int argc = 4;
+    const char* argv[]{"she_test_test", "-run", "s1.t1", "s1.t2"};
+    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::command_line::get_instance().get_ops());
   }
   /* run */ {
-    int argc = 5;
-    char* argv[]{"she_test_test", "-exclude", "s1.t1", "s2.t1", "s3,t1"};
-    she_test::command_line::getInstance().parse(argc, argv);
-    exec(she_test::command_line::getInstance().get_ops());
+    constexpr int argc = 5;
+    const char* argv[]{"she_test_test", "-exclude", "s1.t1", "s2.t1", "s3,t1"};
+    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::command_line::get_instance().get_ops());
   }
   /* run all */ {
-    int argc = 1;
-    char* argv[]{"she_test_test"};
-    she_test::command_line::getInstance().parse(argc, argv);
-    exec(she_test::command_line::getInstance().get_ops());
+    constexpr int argc = 1;
+    const char* argv[]{"she_test_test"};
+    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::command_line::get_instance().get_ops());
   }
   /* error test */ {
-    int argc = 2;
-    char* argv[]{"she_test_test", "hahahah"};
-    she_test::command_line::getInstance().parse(argc, argv);
-    exec(she_test::command_line::getInstance().get_ops());
+    constexpr int argc = 2;
+    const char* argv[2]{"she_test_test", "hahahah"};
+    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::command_line::get_instance().get_ops());
   }
 
   return 0;

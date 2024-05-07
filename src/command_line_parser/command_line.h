@@ -18,7 +18,7 @@ struct parame_packages {
 
 class command_line {
  public:
-  static command_line& getInstance() {
+  static command_line& get_instance() {
     static command_line instance;
     return instance;
   }
@@ -33,12 +33,14 @@ class command_line {
   // Convert the parameter to a state
   void parse(int argc, char** argv);
 
+  // Use after parsing(this->parse)
   std::vector<details::parame_packages> get_ops() {
     auto ret = std::move(ops_);
     ops_.clear();
     return ret;
   }
 
+  // Check the validity of the test name
   static auto split_suite_name_and_test_case(const std::string& input) -> std::tuple<std::string, std::string> {
     size_t pos = input.find('.');
     if (pos != std::string::npos) {

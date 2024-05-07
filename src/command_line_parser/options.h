@@ -32,6 +32,7 @@ static std::unordered_map<std::string, options> options_table = {
     std::make_pair("-list", options::LIST_ALL_TESTS),
     std::make_pair("-run", options::RUN_SOME_TESTS),
     std::make_pair("-exclude", options::EXCLUDE_SOME_TESTS),
+    std::make_pair("-run_all", options::RUN_ALL_TESTS),
 };
 
 }  // namespace she_test

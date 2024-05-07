@@ -14,6 +14,7 @@ static std::string help_message{
     "-list                  Get all test cases\n"
     "-run                   Run some tests\n"
     "-exclude               Exclude some test cases\n"
+    "-run_all               Run all tests\n"
     "                       Default: run all test cases\n"
     "\n "};
 
