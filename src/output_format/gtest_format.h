@@ -58,7 +58,6 @@ class gtest : public common::test_info<> {
   void READY_TO_RACE(const std::string& test_suite_name,
                      const std::string& test_name,
                      const details::test_function& waiting_to_run) noexcept override {
-    ++total_number_of_tests;
     using namespace common;
     using namespace print_color;
     int now_failed_tests = failed_tests;

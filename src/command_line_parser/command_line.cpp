@@ -9,7 +9,11 @@
 
 namespace she_test {
 void command_line::parse(int argc, char** argv) {
-  const std::vector<std::string> args(argv, argv + argc);
+  std::vector<std::string> args;
+
+  if (argv != nullptr) {
+    args = std::move(std::vector<std::string>(argv, argv + argc));
+  }
 
   if (args.size() <= 1) {
     // There are no additional parameters
