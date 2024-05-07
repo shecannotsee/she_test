@@ -48,8 +48,16 @@ class test_case {
   }
 
   template <typename output_format_type>
-  static void run(const std::string& suite_name, const std::string& test_name) {
-    output_format_type format;
+  static void run_all(const std::vector<std::tuple<std::string, std::string>>& list) {
+    output_format_type format(list);
+    for (const auto& test_case : list) {
+      run<output_format_type>(std::get<0>(test_case), std::get<1>(test_case), std::forward<output_format_type>(format));
+    }
+  }
+
+ private:
+  template <typename output_format_type>
+  static void run(const std::string& suite_name, const std::string& test_name, output_format_type&& format) {
     // There are no test suite
     if (get_instance().tests_.find(suite_name) == get_instance().tests_.end()) {
       format.NO_TEST_SUITE(suite_name);

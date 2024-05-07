@@ -15,7 +15,7 @@ using test_function = std::function<bool()>;
 
 class she_test_v1 : public common::test_info<> {
  public:
-  she_test_v1() : test_info() {
+  she_test_v1(const std::vector<std::tuple<std::string, std::string>>& list) : test_info(list) {
     using namespace common;
     colorful_ln("[she_test] ", "Framework begins testing...", PURPLE_COLOR);
 
@@ -57,6 +57,7 @@ class she_test_v1 : public common::test_info<> {
   void READY_TO_RACE(const std::string& test_suite_name,
                      const std::string& test_name,
                      const test_function& waiting_to_run) noexcept override {
+    ++total_number_of_tests;
     using namespace common;
     int now_failed_tests = failed_tests;
     std::string msg      = test_suite_name + " - " + test_name;

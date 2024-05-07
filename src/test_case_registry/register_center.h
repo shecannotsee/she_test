@@ -18,12 +18,9 @@ class register_center {
   static void init_and_run(int argc = 1, char** argv = nullptr) {
     const auto all_test = test_case::get_all();
     // TODO:filter from command_line
-
-    std::vector<std::tuple<std::string, std::string>> result = all_test;
-    ;
-    for (const auto& _ : result) {
-      test_case::run<output_format::gtest>(std::get<0>(_), std::get<1>(_));
-    }
+    // ...
+    const std::vector<std::tuple<std::string, std::string>>& run_list = all_test;
+    test_case::run_all<output_format::gtest>(run_list);
   }
 };
 

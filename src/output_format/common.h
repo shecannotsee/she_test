@@ -31,11 +31,27 @@ template <typename integer_type = int>
 struct test_info {
   static_assert(std::is_integral<integer_type>::value, "integer_type must be an integral type");
 
-  integer_type total_number_of_tests{1};
+  integer_type total_number_of_tests{0};
   integer_type failed_tests{0};
-  integer_type total_number_of_suites{1};
+  integer_type total_number_of_suites{0};
   integer_type total_time{0};
-  std::string module_name{"gtest_module"};
+  std::string module_name{};
+  explicit test_info(const std::vector<std::tuple<std::string, std::string>>& list) {
+    /* Get suite snumber */
+    {
+      std::unordered_map<std::string, int> unique_elements;
+      for (const auto& tuple : list) {
+        const std::string& element = std::get<0>(tuple);
+        unique_elements[element]++;
+      }
+      for (const auto& pair : unique_elements) {
+        module_name += pair.first + "(" + std::to_string(pair.second) + ") ";
+        ++total_number_of_suites;
+      }
+    }
+    /* Get test case number */
+    total_number_of_tests = list.size();
+  }
   virtual ~test_info() = default;
 
   // I love KTM-R2R!

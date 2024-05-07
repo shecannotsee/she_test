@@ -12,7 +12,7 @@ namespace output_format {
 
 class gtest : public common::test_info<> {
  public:
-  gtest() : test_info() {
+  gtest(const std::vector<std::tuple<std::string, std::string>>& list) : test_info(list) {
     using namespace print_color;
     using namespace common;
     colorful("[==========] ", GREEN_COLOR);
@@ -26,7 +26,7 @@ class gtest : public common::test_info<> {
     using namespace common;
     colorful_ln("\n[----------] ", "Global test environment tear-down.", GREEN_COLOR);
     colorful("[==========] ", GREEN_COLOR);
-    printf("%d tests from %d test suites ran. (%d ms total)\n", total_number_of_tests, total_number_of_suites,
+    printf("%d tests from %d test suites run. (%d ms total)\n", total_number_of_tests, total_number_of_suites,
            total_time);
     colorful("[  PASSED  ] ", GREEN_COLOR);
     printf("%d tests\n\n", total_number_of_tests - failed_tests);
@@ -58,6 +58,7 @@ class gtest : public common::test_info<> {
   void READY_TO_RACE(const std::string& test_suite_name,
                      const std::string& test_name,
                      const details::test_function& waiting_to_run) noexcept override {
+    ++total_number_of_tests;
     using namespace common;
     using namespace print_color;
     int now_failed_tests = failed_tests;
