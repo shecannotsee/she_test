@@ -17,9 +17,36 @@ install(TARGETS
     )
 
 install(FILES
-        ${CMAKE_SOURCE_DIR}/src/she_test.h
+        ${CMAKE_SOURCE_DIR}/src/command_line_parser/command_line.h
+        ${CMAKE_SOURCE_DIR}/src/command_line_parser/options.h
+        DESTINATION # to
+        ${PROJECT_NAME}/include/command_line_parser # target dir
+)
+
+install(FILES
+        ${CMAKE_SOURCE_DIR}/src/output_format/common.h
+        ${CMAKE_SOURCE_DIR}/src/output_format/gtest_format.h
+        ${CMAKE_SOURCE_DIR}/src/output_format/she_test_v1.h
+        DESTINATION # to
+        ${PROJECT_NAME}/include/output_format # target dir
+)
+
+install(FILES
+        ${CMAKE_SOURCE_DIR}/src/template_support/equal.h
+        DESTINATION # to
+        ${PROJECT_NAME}/include/template_support # target dir
+)
+
+install(FILES
+        ${CMAKE_SOURCE_DIR}/src/test_case_registry/register_center.h
+        ${CMAKE_SOURCE_DIR}/src/test_case_registry/test_case.h
+        DESTINATION # to
+        ${PROJECT_NAME}/include/test_case_registry # target dir
+)
+
+install(FILES
         ${CMAKE_SOURCE_DIR}/src/print_color.h
-        ${CMAKE_SOURCE_DIR}/src/test_case_manager.h
+        ${CMAKE_SOURCE_DIR}/src/she_test.h
         DESTINATION # to
         ${PROJECT_NAME}/include # target dir
 )
