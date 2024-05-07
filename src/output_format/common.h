@@ -43,7 +43,7 @@ struct test_info {
 
   virtual void NO_TEST_SUITE(const std::string& suite_name) noexcept = 0;
 
-  virtual void NO_TEST_CASE(const std::string& test_name) noexcept = 0;
+  virtual void NO_TEST_CASE(const std::string& suite_name, const std::string& test_name) noexcept = 0;
 
   /*
    * @return return millseconds

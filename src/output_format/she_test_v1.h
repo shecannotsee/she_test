@@ -34,10 +34,24 @@ class she_test_v1 : public common::test_info<> {
     }
   }
 
-  virtual void NO_TEST_SUITE(const std::string& suite_name) noexcept {
+  void NO_TEST_SUITE(const std::string& suite_name) noexcept override {
+    using namespace common;
+    using namespace print_color;
+    std::string msg = suite_name;
+    colorful_ln("[she_test] READY TO RACE...>>", msg, YELLOW_COLOR);
+    msg = suite_name;
+    colorful_ln("NO ", msg, RED_COLOR);
+    colorful_ln("[she_test] FAILED. >>", msg, RED_COLOR);
   }
 
-  virtual void NO_TEST_CASE(const std::string& test_name) noexcept {
+  void NO_TEST_CASE(const std::string& suite_name, const std::string& test_name) noexcept override {
+    using namespace common;
+    using namespace print_color;
+    std::string msg = suite_name + ", " + test_name;
+    colorful_ln("[she_test] READY TO RACE...>> ", msg, YELLOW_COLOR);
+    msg = test_name;
+    colorful_ln("NO ", msg, RED_COLOR);
+    colorful_ln("[she_test] FAILED. >>", msg, RED_COLOR);
   }
 
   void READY_TO_RACE(const std::string& test_suite_name,

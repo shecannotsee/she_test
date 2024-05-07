@@ -58,9 +58,10 @@ class test_case {
 
     // There are no test case under test suite
     if (get_instance().tests_[suite_name].find(test_name) == get_instance().tests_[suite_name].end()) {
-      format.NO_TEST_CASE(test_name);
+      format.NO_TEST_CASE(suite_name, test_name);
       return;
     }
+
     // Run test case and check
     const auto& func = get_instance().tests_[suite_name][test_name];
     format.READY_TO_RACE(suite_name, test_name, func);

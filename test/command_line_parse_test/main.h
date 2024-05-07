@@ -5,7 +5,10 @@
 #ifndef COMMAND_LINE_PARSE_TEST_MAIN_H
 #define COMMAND_LINE_PARSE_TEST_MAIN_H
 
+#include <iostream>
+
 #include "../test_support.h"
+#include "command_line_parser/command_line.h"
 #include "command_line_parser/help.h"
 #include "command_line_parser/version.h"
 
@@ -100,7 +103,7 @@ inline int run_test() {
   }
   /* run */ {
     int argc = 5;
-    char* argv[]{"she_test_test", "-exclude", "s1.t1", "s2.t1","s3,t1"};
+    char* argv[]{"she_test_test", "-exclude", "s1.t1", "s2.t1", "s3,t1"};
     she_test::command_line::getInstance().parse(argc, argv);
     exec(she_test::command_line::getInstance().get_ops());
   }
