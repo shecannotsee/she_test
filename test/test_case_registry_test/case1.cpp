@@ -1,4 +1,4 @@
-#include <test_case_registry/register_center.h>
+#include <she_test.h>
 
 SHE_TEST(suite1, case1) {
   return true;

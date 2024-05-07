@@ -2,7 +2,7 @@
 #define INTEGRITY_TEST_MAIN_H
 
 #include "../test_support.h"
-#include "test_case_registry/register_center.h"
+#include "she_test.h"
 
 namespace integrity_test {
 
