@@ -1,8 +1,4 @@
-//
-// Created by shecannotsee on 24-2-29.
-//
-
-#include <register_demo/register_demo.h>
+#include "register_demo.h"
 
 #include <iostream>
 

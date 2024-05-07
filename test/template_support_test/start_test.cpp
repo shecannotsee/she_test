@@ -1,9 +1,7 @@
-//
-// Created by shecannotsee on 24-3-4.
-//
 #include "start_test.h"
 
 #include <template_support/equal.h>
+#include <iostream>
 
 void template_support_test::check() {
   using namespace she_test;

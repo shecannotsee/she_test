@@ -5,7 +5,7 @@
 #ifndef EASY_DEMO_TEST_MAIN_H
 #define EASY_DEMO_TEST_MAIN_H
 
-#include <register_demo/register_demo.h>
+#include "register_demo.h"
 
 #include "../test_support.h"
 

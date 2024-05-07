@@ -25,7 +25,7 @@ inline int run_test() {
     });
     t1.READY_TO_RACE("gtest_format", "false", []() -> bool {
       std::cout << "ready to sleep...(set 1 second)\n";
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      std::this_thread::sleep_for(std::chrono::milliseconds(43));
       return false;
     });
   }
@@ -38,7 +38,7 @@ inline int run_test() {
     });
     t2.READY_TO_RACE("s_test_v1_format", "false", []() -> bool {
       std::cout << "ready to sleep...(set 1 second)\n";
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      std::this_thread::sleep_for(std::chrono::milliseconds(43));
       return false;
     });
   }

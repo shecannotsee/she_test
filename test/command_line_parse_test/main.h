@@ -9,8 +9,7 @@
 
 #include "../test_support.h"
 #include "command_line_parser/command_line.h"
-#include "command_line_parser/help.h"
-#include "command_line_parser/version.h"
+#include "command_line_parser/options.h"
 
 namespace command_line_parse_test {
 
@@ -19,19 +18,19 @@ void exec(std::vector<she_test::details::parame_packages> ops) {
 
   for (const auto& e : ops) {
     switch (e.key) {
-      case options::VERSION: {
+      case details::options::VERSION: {
         std::cout << "she_test version " << details::version << std::endl;
         break;
       }
-      case options::HELP: {
+      case details::options::HELP: {
         std::cout << details::help_message << std::endl;
         break;
       }
-      case options::LIST_ALL_TESTS: {
+      case details::options::LIST_ALL_TESTS: {
         std::cout << "list all test cases\n";
         break;
       }
-      case options::RUN_SOME_TESTS: {
+      case details::options::RUN_SOME_TESTS: {
         std::cout << "run:\n";
         for (const auto& test_cases : e.value) {
           try {
@@ -44,7 +43,7 @@ void exec(std::vector<she_test::details::parame_packages> ops) {
         }
         break;
       }
-      case options::EXCLUDE_SOME_TESTS: {
+      case details::options::EXCLUDE_SOME_TESTS: {
         std::cout << "exclude:\n";
         for (const auto& test_cases : e.value) {
           try {
@@ -57,11 +56,11 @@ void exec(std::vector<she_test::details::parame_packages> ops) {
         }
         break;
       }
-      case options::RUN_ALL_TESTS: {
+      case details::options::RUN_ALL_TESTS: {
         std::cout << "run all test:\n";
         break;
       }
-      case options::UNKNOW: {
+      case details::options::UNKNOW: {
         std::cout << "error options:\n";
         for (const auto& error_options : e.value) {
           std::cout << error_options << std::endl;
