@@ -1,8 +1,6 @@
 #ifndef SHE_TEST_EQUAL_H
 #define SHE_TEST_EQUAL_H
 
-#include <iostream>
-
 namespace she_test {
 
 #if __cplusplus >= 201703L  // standard >= c++17

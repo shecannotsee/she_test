@@ -4,9 +4,7 @@
 #include <iostream>
 
 #include "../command_line_parser/command_line.h"
-#include "../command_line_parser/help.h"
 #include "../command_line_parser/options.h"
-#include "../command_line_parser/version.h"
 #include "../output_format/gtest_format.h"
 #include "test_case.h"
 
@@ -14,6 +12,7 @@ namespace she_test {
 
 namespace details {
 
+template<typename T = output_format::gtest>
 class register_center {
  public:
   static void add_test(const std::string& suite_name,
@@ -21,6 +20,7 @@ class register_center {
                        const details::test_function& test_func = nullptr) {
     test_case::add(suite_name, test_name, test_func);
   }
+
   static void init_and_run(int argc = 1, char** argv = nullptr) {
     const auto all_test = test_case::get_all();
     std::vector<std::tuple<std::string, std::string>> run_list;
@@ -92,7 +92,7 @@ class register_center {
         }
       }  // switch
     }
-    test_case::run_all<output_format::gtest>(run_list);
+    test_case::run_all<T>(run_list);
   }
 };
 
@@ -105,7 +105,7 @@ class register_center {
   bool test_name();                                                                          \
   struct test_name##_register {                                                              \
     test_name##_register() {                                                                 \
-      she_test::details::register_center::add_test(#test_suite_name, #test_name, test_name); \
+      she_test::details::register_center<>::add_test(#test_suite_name, #test_name, test_name); \
     }                                                                                        \
   } test_name##_instance;                                                                    \
   }                                                                                          \

@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+#include <chrono>
+
 #include "../print_color.h"
 #include "test_case_registry/test_case.h"
 

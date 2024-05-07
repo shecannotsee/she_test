@@ -1,7 +1,5 @@
 #ifndef SHE_TEST_S_TEST_V1_H
 #define SHE_TEST_S_TEST_V1_H
-#include <chrono>
-#include <functional>
 
 #include "../print_color.h"
 #include "common.h"
@@ -11,11 +9,10 @@ namespace she_test {
 namespace output_format {
 
 using namespace print_color;
-using test_function = std::function<bool()>;
 
 class she_test_v1 : public common::test_info<> {
  public:
-  she_test_v1(const std::vector<std::tuple<std::string, std::string>>& list) : test_info(list) {
+  explicit she_test_v1(const std::vector<std::tuple<std::string, std::string>>& list) : test_info(list) {
     using namespace common;
     colorful_ln("[she_test] ", "Framework begins testing...", PURPLE_COLOR);
 
@@ -56,7 +53,7 @@ class she_test_v1 : public common::test_info<> {
 
   void READY_TO_RACE(const std::string& test_suite_name,
                      const std::string& test_name,
-                     const test_function& waiting_to_run) noexcept override {
+                     const details::test_function& waiting_to_run) noexcept override {
     using namespace common;
     int now_failed_tests = failed_tests;
     std::string msg      = test_suite_name + " - " + test_name;

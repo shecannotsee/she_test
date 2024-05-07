@@ -1,8 +1,6 @@
 #ifndef SHE_TEST_GTEST_FORMAT_H
 #define SHE_TEST_GTEST_FORMAT_H
 
-#include <chrono>
-
 #include "../print_color.h"
 #include "common.h"
 
@@ -35,17 +33,17 @@ class gtest : public common::test_info<> {
     }
   }
 
-   void NO_TEST_SUITE(const std::string& suite_name) noexcept override{
+  void NO_TEST_SUITE(const std::string& suite_name) noexcept override {
     using namespace common;
     using namespace print_color;
-    std::string msg = suite_name ;
+    std::string msg = suite_name;
     colorful_ln("[ RUN      ] ", msg, GREEN_COLOR);
     msg = suite_name;
     colorful_ln("NO ", msg, RED_COLOR);
     colorful_ln("[  FAILED  ] ", msg, RED_COLOR);
   }
 
-   void NO_TEST_CASE(const std::string& suite_name, const std::string& test_name) noexcept override {
+  void NO_TEST_CASE(const std::string& suite_name, const std::string& test_name) noexcept override {
     using namespace common;
     using namespace print_color;
     std::string msg = suite_name + ", " + test_name;

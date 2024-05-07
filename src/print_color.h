@@ -1,5 +1,5 @@
-#ifndef PRINT_COLOR_H
-#define PRINT_COLOR_H
+#ifndef SHE_TEST_PRINT_COLOR_H
+#define SHE_TEST_PRINT_COLOR_H
 
 #include <string>
 
@@ -20,4 +20,4 @@ const std::string BLUE_COLOR_S     = "[34m";
 }  // namespace print_color
 }  // namespace she_test
 
-#endif  // PRINT_COLOR_H
+#endif  // SHE_TEST_PRINT_COLOR_H

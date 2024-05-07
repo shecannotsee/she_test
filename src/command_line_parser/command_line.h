@@ -31,7 +31,49 @@ class command_line {
 
  public:
   // Convert the parameter to a state
-  void parse(int argc, char** argv);
+  void parse(int argc, char** argv) {
+    std::vector<std::string> args;
+
+    if (argv != nullptr) {
+      args = std::move(std::vector<std::string>(argv, argv + argc));
+    }
+
+    if (args.size() <= 1) {
+      // There are no additional parameters
+      ops_.emplace_back();
+      ops_.back().key = details::options::RUN_ALL_TESTS;
+      return;
+    }
+
+    enum class state {
+      COMMAND,
+      PARAMETER,  // command param
+      ERROR,
+    };
+
+    auto current_state = state::ERROR;
+    for (int i = 1; i < args.size(); ++i) {
+      auto it = details::options_table.find(args[i]);
+      if (it != details::options_table.end()) {
+        // found command
+        ops_.emplace_back();
+        ops_.back().key = it->second;
+        current_state   = state::COMMAND;
+        continue;
+      }
+
+      if (current_state == state::COMMAND) {
+        // add param
+        ops_.back().value.emplace_back(args[i]);
+      } else {
+        // error command
+        details::parame_packages error_temp;
+        error_temp.key = details::options::UNKNOW;
+        error_temp.value.emplace_back(args[i]);
+        ops_.emplace_back(error_temp);
+      }
+    }
+  }
 
   // Use after parsing(this->parse)
   std::vector<details::parame_packages> get_ops() {

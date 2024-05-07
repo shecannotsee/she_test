@@ -6,6 +6,7 @@
 
 namespace she_test {
 
+namespace details {
 enum class options : int {
   VERSION = 0,
   HELP,
@@ -34,6 +35,24 @@ static std::unordered_map<std::string, options> options_table = {
     std::make_pair("-exclude", options::EXCLUDE_SOME_TESTS),
     std::make_pair("-run_all", options::RUN_ALL_TESTS),
 };
+
+constexpr int major = 0;
+constexpr int minor = 0;
+constexpr int patch = 1;
+const std::string version = std::to_string(major) + "." + std::to_string(minor) + "." + std::to_string(patch);
+
+static std::string help_message{
+  ""
+  "-version               Get version\n"
+  "-help                  You may need some help\n"
+  "-list                  Get all test cases\n"
+  "-run                   Run some tests\n"
+  "-exclude               Exclude some test cases\n"
+  "-run_all               Run all tests\n"
+  "                       Default: run all test cases\n"
+  "\n "};
+
+}  // namespace details
 
 }  // namespace she_test
 
