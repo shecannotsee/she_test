@@ -10,8 +10,6 @@
 
 namespace she_test {
 
-namespace details {
-
 template <typename T = format::gtest>
 class register_center {
  public:
@@ -22,21 +20,19 @@ class register_center {
   static void init_and_run(int argc = 1, char** argv = nullptr);
 };
 
-}  // namespace details
-
 }  // namespace she_test
 
 #include "register_center_impl.h"
 
-#define SHE_TEST(test_suite_name, test_name)                                                 \
-  namespace test_suite_name {                                                                \
-  bool test_name();                                                                          \
-  struct test_name##_register {                                                              \
-    test_name##_register() {                                                                 \
-      she_test::details::register_center<>::add_test(#test_suite_name, #test_name, test_name); \
-    }                                                                                        \
-  } test_name##_instance;                                                                    \
-  }                                                                                          \
+#define SHE_TEST(test_suite_name, test_name)                                          \
+  namespace test_suite_name {                                                         \
+  bool test_name();                                                                   \
+  struct test_name##_register {                                                       \
+    test_name##_register() {                                                          \
+      she_test::register_center<>::add_test(#test_suite_name, #test_name, test_name); \
+    }                                                                                 \
+  } test_name##_instance;                                                             \
+  }                                                                                   \
   bool test_suite_name::test_name()
 
 #endif  // SHE_TEST_REGISTER_CENTER_H

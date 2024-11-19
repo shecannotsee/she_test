@@ -1,14 +1,15 @@
 #include "register_center.h"
 
 template <typename T>
-void she_test::details::register_center<T>::add_test(const std::string& suite_name,
-                                                     const std::string& test_name,
-                                                     const details::test_function& test_func) {
+void she_test::register_center<T>::add_test(const std::string& suite_name,
+                                            const std::string& test_name,
+                                            const details::test_function& test_func) {
   test_case::add(suite_name, test_name, test_func);
 }
 
 template <typename T>
-void she_test::details::register_center<T>::init_and_run(int argc, char** argv) {
+void she_test::register_center<T>::init_and_run(int argc, char** argv) {
+  using namespace details;
   const auto all_test = test_case::get_all();
   std::vector<std::tuple<std::string, std::string>> run_list;
   // filter from command_line

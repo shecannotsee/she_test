@@ -9,7 +9,7 @@ namespace integrity_test {
 inline int run_test(int argc, char** argv) {
   test_support _("integrity_test");
 
-  she_test::details::register_center<>::init_and_run(argc, argv);
+  she_test::register_center<>::init_and_run(argc, argv);
 
   return 0;
 }
