@@ -8,8 +8,8 @@
 #include <iostream>
 
 #include "../test_support.h"
-#include "command_line_parser/command_line.h"
-#include "command_line_parser/options.h"
+#include "command_line/options.h"
+#include "command_line/parser.h"
 
 namespace command_line_parse_test {
 
@@ -34,7 +34,7 @@ void exec(std::vector<she_test::details::parame_packages> ops) {
         std::cout << "run:\n";
         for (const auto& test_cases : e.value) {
           try {
-            auto ret = command_line::split_suite_name_and_test_case(test_cases);
+            auto ret = parser::split_suite_name_and_test_case(test_cases);
             std::cout << "suite name:" << std::get<0>(ret) << ",";
             std::cout << "test case name:" << std::get<1>(ret) << std::endl;
           } catch (const std::runtime_error& ex) {
@@ -47,7 +47,7 @@ void exec(std::vector<she_test::details::parame_packages> ops) {
         std::cout << "exclude:\n";
         for (const auto& test_cases : e.value) {
           try {
-            auto ret = command_line::split_suite_name_and_test_case(test_cases);
+            auto ret = parser::split_suite_name_and_test_case(test_cases);
             std::cout << "suite name:" << std::get<0>(ret) << ",";
             std::cout << "test case name:" << std::get<1>(ret) << std::endl;
           } catch (const std::runtime_error& ex) {
@@ -79,44 +79,44 @@ inline int run_test() {
   /* version */ {
     constexpr int argc = 2;
     const char* argv[]{"she_test_test", "-version"};
-    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::command_line::get_instance().get_ops());
+    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::parser::get_instance().get_ops());
   }
   /* help */ {
     constexpr int argc = 2;
     const char* argv[]{"she_test_test", "-help"};
-    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::command_line::get_instance().get_ops());
+    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::parser::get_instance().get_ops());
   }
   /* list */ {
     constexpr int argc = 2;
     const char* argv[]{"she_test_test", "-list"};
-    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::command_line::get_instance().get_ops());
+    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::parser::get_instance().get_ops());
   }
   /* list */ {
     constexpr int argc = 4;
     const char* argv[]{"she_test_test", "-run", "s1.t1", "s1.t2"};
-    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::command_line::get_instance().get_ops());
+    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::parser::get_instance().get_ops());
   }
   /* run */ {
     constexpr int argc = 5;
     const char* argv[]{"she_test_test", "-exclude", "s1.t1", "s2.t1", "s3,t1"};
-    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::command_line::get_instance().get_ops());
+    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::parser::get_instance().get_ops());
   }
   /* run all */ {
     constexpr int argc = 1;
     const char* argv[]{"she_test_test"};
-    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::command_line::get_instance().get_ops());
+    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::parser::get_instance().get_ops());
   }
   /* error test */ {
     constexpr int argc = 2;
     const char* argv[2]{"she_test_test", "hahahah"};
-    she_test::command_line::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::command_line::get_instance().get_ops());
+    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
+    exec(she_test::parser::get_instance().get_ops());
   }
 
   return 0;

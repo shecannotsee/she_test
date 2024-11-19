@@ -16,65 +16,26 @@ using test_suite_table = unordered_map<string, unordered_map<string, test_functi
 }  // namespace details
 
 class test_case {
-  static auto get_instance() -> test_case& {
-    static test_case instance;
-    return instance;
-  }
+  static auto get_instance() -> test_case&;
 
   details::test_suite_table tests_;
 
  public:
   static void add(const std::string& suite_name,
                   const std::string& test_name,
-                  const details::test_function& test_func = nullptr) {
-    get_instance().tests_[suite_name][test_name] = test_func;
-  }
+                  const details::test_function& test_func = nullptr);
 
-  static auto get_all() -> std::vector<std::tuple<std::string, std::string>> {
-    std::vector<std::tuple<std::string, std::string>> all_test_cases;
-
-    for (const auto& suite : get_instance().tests_) {
-      const std::string& suite_name                                            = suite.first;
-      const std::unordered_map<std::string, details::test_function>& testSuite = suite.second;
-
-      for (const auto& test : testSuite) {
-        const std::string& test_name = test.first;
-
-        all_test_cases.emplace_back(suite_name, test_name);
-      }
-    }
-
-    return all_test_cases;
-  }
+  static auto get_all() -> std::vector<std::tuple<std::string, std::string>>;
 
   template <typename output_format_type>
-  static void run_all(const std::vector<std::tuple<std::string, std::string>>& list) {
-    output_format_type format(list);
-    for (const auto& test_case : list) {
-      run<output_format_type>(std::get<0>(test_case), std::get<1>(test_case), std::forward<output_format_type>(format));
-    }
-  }
+  static void run_all(const std::vector<std::tuple<std::string, std::string>>& list);
 
  private:
   template <typename output_format_type>
-  static void run(const std::string& suite_name, const std::string& test_name, output_format_type&& format) {
-    // There are no test suite
-    if (get_instance().tests_.find(suite_name) == get_instance().tests_.end()) {
-      format.NO_TEST_SUITE(suite_name);
-      return;
-    }
-
-    // There are no test case under test suite
-    if (get_instance().tests_[suite_name].find(test_name) == get_instance().tests_[suite_name].end()) {
-      format.NO_TEST_CASE(suite_name, test_name);
-      return;
-    }
-
-    // Run test case and check
-    const auto& func = get_instance().tests_[suite_name][test_name];
-    format.READY_TO_RACE(suite_name, test_name, func);
-  }
+  static void run(const std::string& suite_name, const std::string& test_name, output_format_type&& format);
 };
 }  // namespace she_test
+
+#include "test_case_impl.h"
 
 #endif  // SHE_TEST_TEST_CASE_H

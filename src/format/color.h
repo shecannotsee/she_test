@@ -1,10 +1,10 @@
-#ifndef SHE_TEST_PRINT_COLOR_H
-#define SHE_TEST_PRINT_COLOR_H
+#ifndef SHE_TEST_FORMAT_COLOR_H
+#define SHE_TEST_FORMAT_COLOR_H
 
 #include <string>
 
-namespace she_test {
-namespace print_color {
+namespace she_test::color {
+
 constexpr const char* RESET_COLOR  = "[0m";
 constexpr const char* RED_COLOR    = "[31m";
 constexpr const char* GREEN_COLOR  = "[32m";
@@ -17,7 +17,7 @@ const std::string GREEN_COLOR_S    = "[32m";
 const std::string YELLOW_COLOR_S   = "[33m";
 const std::string PURPLE_COLOR_S   = "[35m";
 const std::string BLUE_COLOR_S     = "[34m";
-}  // namespace print_color
-}  // namespace she_test
 
-#endif  // SHE_TEST_PRINT_COLOR_H
+}  // namespace she_test::color
+
+#endif  // SHE_TEST_FORMAT_COLOR_H
