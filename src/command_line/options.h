@@ -14,7 +14,7 @@ enum class options : int {
   RUN_SOME_TESTS,
   EXCLUDE_SOME_TESTS,
   RUN_ALL_TESTS,  // default
-  UNKNOW          // default
+  UNKNOWN         // default
 };
 
 static std::unordered_map<options, std::string> options_desc = {
@@ -24,7 +24,7 @@ static std::unordered_map<options, std::string> options_desc = {
     std::make_pair(options::RUN_SOME_TESTS, "Run some tests"),
     std::make_pair(options::EXCLUDE_SOME_TESTS, "Exclude some test cases"),
     std::make_pair(options::RUN_ALL_TESTS, "Default: run all test cases"),
-    std::make_pair(options::UNKNOW, "Default: unknow"),
+    std::make_pair(options::UNKNOWN, "Default: unknow"),
 };
 
 static std::unordered_map<std::string, options> options_table = {

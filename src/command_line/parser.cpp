@@ -41,7 +41,7 @@ void she_test::parser::parse(int argc, char** argv) {
     } else {
       // error command
       details::parame_packages error_temp;
-      error_temp.key = details::options::UNKNOW;
+      error_temp.key = details::options::UNKNOWN;
       error_temp.value.emplace_back(args[i]);
       ops_.emplace_back(error_temp);
     }

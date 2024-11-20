@@ -1,7 +1,7 @@
 #ifndef SHE_TEST_FORMAT_GTEST_H
 #define SHE_TEST_FORMAT_GTEST_H
 
-#include "support.h"
+#include "colorful.h"
 #include "template_format.h"
 
 namespace she_test::format {

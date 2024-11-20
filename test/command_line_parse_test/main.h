@@ -60,7 +60,7 @@ void exec(std::vector<she_test::details::parame_packages> ops) {
         std::cout << "run all test:\n";
         break;
       }
-      case details::options::UNKNOW: {
+      case details::options::UNKNOWN: {
         std::cout << "error options:\n";
         for (const auto& error_options : e.value) {
           std::cout << error_options << std::endl;

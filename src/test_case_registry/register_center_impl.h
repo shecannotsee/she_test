@@ -67,7 +67,7 @@ void she_test::register_center<T>::init_and_run(int argc, char** argv) {
         run_list = all_test;
         break;
       }
-      case options::UNKNOW: {
+      case options::UNKNOWN: {
         std::cout << "error options:\n";
         for (const auto& error_options : op.value) {
           std::cout << error_options << std::endl;

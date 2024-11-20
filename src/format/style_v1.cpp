@@ -1,6 +1,6 @@
 #include "style_v1.h"
 
-#include "support.h"
+#include "colorful.h"
 
 she_test::format::style_v1::style_v1(const std::vector<std::tuple<std::string, std::string>>& list)
     : template_format(list) {
