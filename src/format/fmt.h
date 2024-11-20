@@ -1,6 +1,7 @@
 #ifndef SHE_TEST_FORMAT_FMT_H
 #define SHE_TEST_FORMAT_FMT_H
 
+#include <iostream>
 #include <sstream>
 
 namespace she_test {
@@ -35,6 +36,20 @@ std::string fmt(const std::string& format, Args&&... args) {
   std::ostringstream oss;
   detail::format_string(oss, format, std::forward<Args>(args)...);
   return oss.str();
+}
+
+template <typename... Args>
+void fmt_print(const std::string& format, Args&&... args) {
+  std::ostringstream oss;
+  detail::format_string(oss, format, std::forward<Args>(args)...);
+  std::cout << oss.str();
+}
+
+template <typename... Args>
+void fmt_println(const std::string& format, Args&&... args) {
+  std::ostringstream oss;
+  detail::format_string(oss, format, std::forward<Args>(args)...);
+  std::cout << oss.str() << std::endl;
 }
 }  // namespace format
 

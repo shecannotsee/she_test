@@ -2,35 +2,53 @@
 #define SHE_TEST_FORMAT_TEMPLATE_FORMAT_H
 
 #include <chrono>
-
-#include "test_case_registry/test_case.h"
+#include <cstdint>
+#include <string>
 
 namespace she_test::format {
 
 class template_format {
+  uint64_t total_number_of_tests;
+  uint64_t failed_tests;
+  uint64_t test_time;
+  std::chrono::high_resolution_clock::time_point start_time;
+
  public:
-  int total_number_of_tests;
-  int failed_tests;
-  int total_number_of_suites;
-  int total_time;
-  std::string module_name;
-
-
-  explicit template_format(const std::vector<std::tuple<std::string, std::string>>& list);
-
+  template_format()
+      : total_number_of_tests(0), failed_tests(0), test_time(0), start_time(std::chrono::high_resolution_clock::now()) {
+  }
   virtual ~template_format() = default;
 
-  // I love KTM-R2R!
-  virtual void READY_TO_RACE(const std::string&, const std::string&, const details::test_function&) noexcept = 0;
+  auto get_test_number() const -> uint64_t {
+    return total_number_of_tests;
+  }
+  void set_test_number(const uint64_t test_number) {
+    total_number_of_tests = test_number;
+  }
+  auto get_failed_tests() const -> uint64_t {
+    return failed_tests;
+  }
+  void add_failed_test_number() {
+    failed_tests++;
+  }
+  void start_test_time() {
+    start_time = std::chrono::high_resolution_clock::now();
+  }
+  auto end_test_time() -> uint64_t {
+    const auto end_time = std::chrono::high_resolution_clock::now();
+    const auto elapsed  = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+    test_time += elapsed.count();
+    return elapsed.count();
+  }
+  auto get_test_time() const -> uint64_t {
+    return test_time;
+  }
 
-  virtual void NO_TEST_SUITE(const std::string& suite_name) noexcept = 0;
+  virtual void global_start() = 0;
+  virtual void global_end()   = 0;
 
-  virtual void NO_TEST_CASE(const std::string& suite_name, const std::string& test_name) noexcept = 0;
-
-  /*
-   * @return return millseconds
-   */
-  virtual int run_and_check(const details::test_function& waiting_to_run);
+  virtual void before_test_case(const std::string& test_name) = 0;
+  virtual void after_test_case(const std::string& test_name)  = 0;
 };
 
 }  // namespace she_test::format

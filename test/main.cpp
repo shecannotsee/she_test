@@ -1,20 +1,15 @@
-//
-// Created by shecannotsee on 24-2-4.
-//
 #include "register_demo_test/main.h"
 
 #include "command_line_parse_test/main.h"
-#include "integrity_test/main.h"
-#include "output_format_test/main.h"
-#include "template_support_test/start_test.h"
-#include "test_case_registry_test/main.h"
+#include "format/main.h"
+#include "functional/main.h"
+#include "test_tools/start_test.h"
 
-int main(int argc, char** argv) {
-  command_line_parse_test::run_test();
+int main() {
   easy_demo_test::run_test();
-  output_format_test::run_test();
-  template_support_test::run_test();
-  test_case_registry_test::run_test();
-  integrity_test::run_test(argc,argv);
+  command_line_parse_test::run_test();
+  format::run_test();
+  test_tools::run_test();
+  functional::run_tests();
   return 0;
 }

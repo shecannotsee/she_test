@@ -6,7 +6,7 @@
 #include "../test_support.h"
 #include "test_tools/equal.h"
 
-namespace template_support_test {
+namespace test_tools {
 
 void check(){
   using namespace she_test;
@@ -22,7 +22,7 @@ void check(){
 }
 
 inline int run_test() {
-  test_support _("template_support_test");
+  test_support _("test_tools");
 
   using namespace she_test;
   check();

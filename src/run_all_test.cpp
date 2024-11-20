@@ -1,5 +1,9 @@
-#include "she_test.h"
+#include "run_all_test.h"
 
+#include <iostream>
+
+#include "command_line/options.h"
+#include "command_line/parser.h"
 #include "test_case_registry/multi_level_test_case.h"
 
 namespace {

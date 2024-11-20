@@ -26,6 +26,13 @@ class multi_level_test_case {
   }
 
   static auto get_test_case_list() -> std::vector<std::vector<std::string>> {
+    std::sort(get_instance().test_case_list_.begin(), get_instance().test_case_list_.end(),
+              [](const std::vector<std::string>& a, const std::vector<std::string>& b) {
+                if (a.size() != b.size()) {
+                  return a.size() < b.size();
+                }
+                return a < b;
+              });
     return get_instance().test_case_list_;
   }
 
@@ -34,126 +41,127 @@ class multi_level_test_case {
   }
 };
 
-#define TEST(name1, name2)                                  \
-  namespace name1::name2 {                                  \
-  void __func();                                            \
-  struct __register {                                       \
-    __register() {                                          \
-      multi_level_test_case::add({#name1, #name2}, __func); \
-    }                                                       \
-  } __register_func;                                        \
-  }                                                         \
+#define TEST(name1, name2)                                            \
+  namespace name1::name2 {                                            \
+  void __func();                                                      \
+  struct __register {                                                 \
+    __register() {                                                    \
+      multi_level_test_case::add_test_case({#name1, #name2}, __func); \
+    }                                                                 \
+  } __register_func;                                                  \
+  }                                                                   \
   void name1::name2::__func()
 
-#define TEST1(name1)                                \
-  namespace name1 {                                 \
-  void __func();                                    \
-  struct __register {                               \
-    __register() {                                  \
-      multi_level_test_case::add({#name1}, __func); \
-    }                                               \
-  } __register_func;                                \
-  }                                                 \
+#define TEST1(name1)                                          \
+  namespace name1 {                                           \
+  void __func();                                              \
+  struct __register {                                         \
+    __register() {                                            \
+      multi_level_test_case::add_test_case({#name1}, __func); \
+    }                                                         \
+  } __register_func;                                          \
+  }                                                           \
   void name1::__func()
 
-#define TEST2(name1, name2)                                 \
-  namespace name1::name2 {                                  \
-  void __func();                                            \
-  struct __register {                                       \
-    __register() {                                          \
-      multi_level_test_case::add({#name1, #name2}, __func); \
-    }                                                       \
-  } __register_func;                                        \
-  }                                                         \
+#define TEST2(name1, name2)                                           \
+  namespace name1::name2 {                                            \
+  void __func();                                                      \
+  struct __register {                                                 \
+    __register() {                                                    \
+      multi_level_test_case::add_test_case({#name1, #name2}, __func); \
+    }                                                                 \
+  } __register_func;                                                  \
+  }                                                                   \
   void name1::name2::__func()
 
-#define TEST3(name1, name2, name3)                                  \
-  namespace name1::name2::name3 {                                   \
-  void __func();                                                    \
-  struct __register {                                               \
-    __register() {                                                  \
-      multi_level_test_case::add({#name1, #name2, #name3}, __func); \
-    }                                                               \
-  } __register_func;                                                \
-  }                                                                 \
+#define TEST3(name1, name2, name3)                                            \
+  namespace name1::name2::name3 {                                             \
+  void __func();                                                              \
+  struct __register {                                                         \
+    __register() {                                                            \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3}, __func); \
+    }                                                                         \
+  } __register_func;                                                          \
+  }                                                                           \
   void name1::name2::name3::__func()
 
-#define TEST4(name1, name2, name3, name4)                                   \
-  namespace name1::name2::name3::name4 {                                    \
-  void __func();                                                            \
-  struct __register {                                                       \
-    __register() {                                                          \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4}, __func); \
-    }                                                                       \
-  } __register_func;                                                        \
-  }                                                                         \
+#define TEST4(name1, name2, name3, name4)                                             \
+  namespace name1::name2::name3::name4 {                                              \
+  void __func();                                                                      \
+  struct __register {                                                                 \
+    __register() {                                                                    \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4}, __func); \
+    }                                                                                 \
+  } __register_func;                                                                  \
+  }                                                                                   \
   void name1::name2::name3::name4::__func()
 
-#define TEST5(name1, name2, name3, name4, name5)                                    \
-  namespace name1::name2::name3::name4::name5 {                                     \
-  void __func();                                                                    \
-  struct __register {                                                               \
-    __register() {                                                                  \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5}, __func); \
-    }                                                                               \
-  } __register_func;                                                                \
-  }                                                                                 \
+#define TEST5(name1, name2, name3, name4, name5)                                              \
+  namespace name1::name2::name3::name4::name5 {                                               \
+  void __func();                                                                              \
+  struct __register {                                                                         \
+    __register() {                                                                            \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5}, __func); \
+    }                                                                                         \
+  } __register_func;                                                                          \
+  }                                                                                           \
   void name1::name2::name3::name4::name5::__func()
 
-#define TEST6(name1, name2, name3, name4, name5, name6)                                     \
-  namespace name1::name2::name3::name4::name5::name6 {                                      \
-  void __func();                                                                            \
-  struct __register {                                                                       \
-    __register() {                                                                          \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6}, __func); \
-    }                                                                                       \
-  } __register_func;                                                                        \
-  }                                                                                         \
+#define TEST6(name1, name2, name3, name4, name5, name6)                                               \
+  namespace name1::name2::name3::name4::name5::name6 {                                                \
+  void __func();                                                                                      \
+  struct __register {                                                                                 \
+    __register() {                                                                                    \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6}, __func); \
+    }                                                                                                 \
+  } __register_func;                                                                                  \
+  }                                                                                                   \
   void name1::name2::name3::name4::name5::name6::__func()
 
-#define TEST7(name1, name2, name3, name4, name5, name6, name7)                                      \
-  namespace name1::name2::name3::name4::name5::name6::name7 {                                       \
-  void __func();                                                                                    \
-  struct __register {                                                                               \
-    __register() {                                                                                  \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6, #name7}, __func); \
-    }                                                                                               \
-  } __register_func;                                                                                \
-  }                                                                                                 \
+#define TEST7(name1, name2, name3, name4, name5, name6, name7)                                                \
+  namespace name1::name2::name3::name4::name5::name6::name7 {                                                 \
+  void __func();                                                                                              \
+  struct __register {                                                                                         \
+    __register() {                                                                                            \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7}, __func); \
+    }                                                                                                         \
+  } __register_func;                                                                                          \
+  }                                                                                                           \
   void name1::name2::name3::name4::name5::name6::name7::__func()
 
-#define TEST8(name1, name2, name3, name4, name5, name6, name7, name8)                                       \
-  namespace name1::name2::name3::name4::name5::name6::name7::name8 {                                        \
-  void __func();                                                                                            \
-  struct __register {                                                                                       \
-    __register() {                                                                                          \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8}, __func); \
-    }                                                                                                       \
-  } __register_func;                                                                                        \
-  }                                                                                                         \
+#define TEST8(name1, name2, name3, name4, name5, name6, name7, name8)                                                 \
+  namespace name1::name2::name3::name4::name5::name6::name7::name8 {                                                  \
+  void __func();                                                                                                      \
+  struct __register {                                                                                                 \
+    __register() {                                                                                                    \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8}, __func); \
+    }                                                                                                                 \
+  } __register_func;                                                                                                  \
+  }                                                                                                                   \
   void name1::name2::name3::name4::name5::name6::name7::name8::__func()
 
-#define TEST9(name1, name2, name3, name4, name5, name6, name7, name8, name9)                                        \
-  namespace name1::name2::name3::name4::name5::name6::name7::name8::name9 {                                         \
-  void __func();                                                                                                    \
-  struct __register {                                                                                               \
-    __register() {                                                                                                  \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9}, __func); \
-    }                                                                                                               \
-  } __register_func;                                                                                                \
-  }                                                                                                                 \
+#define TEST9(name1, name2, name3, name4, name5, name6, name7, name8, name9)                                         \
+  namespace name1::name2::name3::name4::name5::name6::name7::name8::name9 {                                          \
+  void __func();                                                                                                     \
+  struct __register {                                                                                                \
+    __register() {                                                                                                   \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9}, \
+                                           __func);                                                                  \
+    }                                                                                                                \
+  } __register_func;                                                                                                 \
+  }                                                                                                                  \
   void name1::name2::name3::name4::name5::name6::name7::name8::name9::__func()
 
-#define TEST10(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10)                               \
-  namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10 {                                 \
-  void __func();                                                                                                    \
-  struct __register {                                                                                               \
-    __register() {                                                                                                  \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, #name10}, \
-                                 __func);                                                                           \
-    }                                                                                                               \
-  } __register_func;                                                                                                \
-  }                                                                                                                 \
+#define TEST10(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10)                 \
+  namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10 {                   \
+  void __func();                                                                                      \
+  struct __register {                                                                                 \
+    __register() {                                                                                    \
+      multi_level_test_case::add_test_case(                                                           \
+          {#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, #name10}, __func); \
+    }                                                                                                 \
+  } __register_func;                                                                                  \
+  }                                                                                                   \
   void name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::__func()
 
 #define TEST11(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10, name11)                  \
@@ -161,7 +169,7 @@ class multi_level_test_case {
   void __func();                                                                                               \
   struct __register {                                                                                          \
     __register() {                                                                                             \
-      multi_level_test_case::add(                                                                              \
+      multi_level_test_case::add_test_case(                                                                    \
           {#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, #name10, #name11}, __func); \
     }                                                                                                          \
   } __register_func;                                                                                           \
@@ -173,7 +181,7 @@ class multi_level_test_case {
   void __func();                                                                                               \
   struct __register {                                                                                          \
     __register() {                                                                                             \
-      multi_level_test_case::add(                                                                              \
+      multi_level_test_case::add_test_case(                                                                    \
           {#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, #name10, #name11, #name12}, \
           __func);                                                                                             \
     }                                                                                                          \
@@ -181,17 +189,17 @@ class multi_level_test_case {
   }                                                                                                            \
   void name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12::__func()
 
-#define TEST13(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10, name11, name12, name13)      \
-  namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12::name13 {        \
-  void __func();                                                                                                   \
-  struct __register {                                                                                              \
-    __register() {                                                                                                 \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, #name10, \
-                                  #name11, #name12, #name13},                                                      \
-                                 __func);                                                                          \
-    }                                                                                                              \
-  } __register_func;                                                                                               \
-  }                                                                                                                \
+#define TEST13(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10, name11, name12, name13)       \
+  namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12::name13 {         \
+  void __func();                                                                                                    \
+  struct __register {                                                                                               \
+    __register() {                                                                                                  \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, \
+                                            #name10, #name11, #name12, #name13},                                    \
+                                           __func);                                                                 \
+    }                                                                                                               \
+  } __register_func;                                                                                                \
+  }                                                                                                                 \
   void name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12::name13::__func()
 
 #define TEST14(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10, name11, name12, name13, name14) \
@@ -199,9 +207,9 @@ class multi_level_test_case {
   void __func();                                                                                                      \
   struct __register {                                                                                                 \
     __register() {                                                                                                    \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, #name10,    \
-                                  #name11, #name12, #name13, #name14},                                                \
-                                 __func);                                                                             \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9,   \
+                                            #name10, #name11, #name12, #name13, #name14},                             \
+                                           __func);                                                                   \
     }                                                                                                                 \
   } __register_func;                                                                                                  \
   }                                                                                                                   \
@@ -230,9 +238,9 @@ class multi_level_test_case {
   void __func();                                                                                                       \
   struct __register {                                                                                                  \
     __register() {                                                                                                     \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, #name10,     \
-                                  #name11, #name12, #name13, #name14, #name15, #name16},                               \
-                                 __func);                                                                              \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9,    \
+                                            #name10, #name11, #name12, #name13, #name14, #name15, #name16},            \
+                                           __func);                                                                    \
     }                                                                                                                  \
   } __register_func;                                                                                                   \
   }                                                                                                                    \
@@ -246,9 +254,9 @@ class multi_level_test_case {
   void __func();                                                                                                       \
   struct __register {                                                                                                  \
     __register() {                                                                                                     \
-      multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, #name10,     \
-                                  #name11, #name12, #name13, #name14, #name15, #name16, #name17},                      \
-                                 __func);                                                                              \
+      multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9,    \
+                                            #name10, #name11, #name12, #name13, #name14, #name15, #name16, #name17},   \
+                                           __func);                                                                    \
     }                                                                                                                  \
   } __register_func;                                                                                                   \
   }                                                                                                                    \
