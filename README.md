@@ -1,76 +1,123 @@
 ### Introduction
 
-she_test is a C++ testing framework.
+**she_test** is a C++ testing framework.
 
-Author: shecannotsee (shecannotsee@163.com)
+**Author**: shecannotsee (shecannotsee@163.com)
+
+
 
 ### Features
 
-- she_test is header-only, you only need to add the files in the src directory to your code to use it.
-- she_test is developed based on C++11.
-- she_test allows you to manage test cases globally without the need to manage them manually. You only need to add simple code at the test entry point. Later at runtime, you can also run specific test cases based on input parameters.
+- **she_test** is highly expressive and supports multi-level test case management, accommodating up to 17 levels by default. This is designed to meet most development needs, but you can easily extend it to support more levels if required.
+- It is developed using **C++17**.
+- **she_test** simplifies test case management. You only need to add minimal code at the test entry point to globally manage test cases. At runtime, you can execute specific test cases using input parameters.
 
-### Usage
 
-Simply initialize the library as follows to manage all your test cases:
+
+### Usage Guide
+
+#### 1. Global Management
+
+You can manage all test cases by initializing the library as shown below:
 
 ```cpp
 /* @file test_main.cpp */
 #include <she_test.h>
 
 int main(int argc, char** argv) {
-    // If you want to use other output methods, you need to manually implement and add instances
-    she_test::details::register_center<>::init_and_run(argc, argv);
-    return 0;
+  // To use other output formats, you need to implement and add a custom instance.
+  // By default, the framework provides `gtest` and `style_v1` styles for selection.
+  she_test::run_all_test<>(argc, argv); // Equivalent to the commented code below
+  // she_test::run_all_test<she_test::format::gtest>(argc, argv);
+  // Or use the `style_v1` format for output
+  // she_test::run_all_test<she_test::format::style_v1>(argc, argv);
+  return 0;
 }
+
 ```
 
-Next, you need to add your test cases. Here, two test suites suite1 (containing 3 test cases) and suite2 (containing 4 test cases) are added, totaling 7 test cases.
+
+
+#### 2. Writing Test Cases
+
+Next, add your test cases. Below, two test suites (`suite1` and `suite2`) are defined. `suite1` contains three test cases, and `suite2` contains four, for a total of seven test cases.
 
 ```cpp
 /* @file suite1.cpp */
 #include <she_test.h>
-SHE_TEST(suite1, case1) {
+TEST(suite1, case1) {
     // ......
-    return true;
 }
 
-SHE_TEST(suite1, case2) {
-    // ......
-    return true;
+TEST(suite1, case2) {
+	// ......
 }
 
-SHE_TEST(suite1, case3) {
-    // ......
-    return true;
+TEST(suite1, case3) {
+	// ......
 }
 
 /* @file suite2.cpp */
 #include <she_test.h>
-SHE_TEST(suite2, case1) {
-  return true;
+TEST(suite2, case1) {
+	// ......
 }
 
-SHE_TEST(suite2, case2) {
-  return true;
+TEST(suite2, case2) {
+	// ......
 }
 
-SHE_TEST(suite2, case3) {
-  return true;
+TEST(suite2, case3) {
+	// ......
 }
 
-SHE_TEST(suite2, case_false) {
-  return false;
+TEST(suite2, case_4) {
+	// ......
 }
 ```
 
-After compiling, you can use parameters to control the execution of test cases (here program_test is used to represent the executable file).
+With the enhanced hierarchical management, you can add more test cases as follows:
 
-```cpp
-# View the version of the testing framework
+```c++
+#include <she_test.h>
+
+TEST1(test1) {
+    // ......
+}
+
+TEST2(test1, test2) {
+    // ......
+}
+
+TEST3(test1, test2, test3) {
+    // ......
+}
+
+TEST4(test1, test2, test3, test4) {
+    // ......
+}
+
+// ......
+// The maximum supported level is 17 by default without modifying the source code.
+// To increase this limit, refer to the macro patterns in 
+// she_test/src/test_case_registry/multi_level_test_case.h and customize accordingly.
+TEST17(test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12, test13, test14, test15, test16, test17) {
+    // ......
+}
+
+```
+
+
+
+#### 3. Controlling Test Execution with Command-Line Arguments
+
+After compiling the project, use the following commands to control the test execution (assuming the executable is `program_test`):
+
+```bash
+# View the framework version
 ./program_test -version
 
-# View the help information of the testing framework
+# View the help information
 ./program_test -help
 
 # Run all test cases
@@ -80,46 +127,55 @@ After compiling, you can use parameters to control the execution of test cases (
 # List all test cases
 ./program_test -list
 
-# Run three test cases (suite1.case1, suite1.case2, suite2.case_false)
-./program_test -run suite1.case1 suite1.case2 suite2.case_false
+# Run three test cases (suite1.case1, suite1.case2, suite2.case4)
+./program_test -run suite1.case1 suite1.case2 suite2.case4
 
-# Run three test cases (suite1.case1, suite1.case2, suite2.case_false) and then exclude one test case (suite2.case_false)
-./program_test -run suite1.case1 suite1.case2 suite2.case_false -exclude suite2.case_false
+# Run three test cases (suite1.case1, suite1.case2, suite2.case4) and exclude one (suite2.case_false)
+./program_test -run suite1.case1 suite1.case2 suite2.case4 -exclude suite2.case_false
 
-# Run all test cases but exclude one test case (suite2.case_false)
-./program_test -run_all -exclude suite2.case_false
+# Run all test cases except one (suite2.case4)
+./program_test -run_all -exclude suite2.case4
 ```
 
-### Getting the Source Code and Building the Project
+
+
+### Source Code and Project Build
 
 ```bash
 $ git clone https://github.com/shecannotsee/she_test
 $ cd she_test
 $ mkdir build
 $ cd build
-$ cmake ..
+$ cmake -DCMAKE_INSTALL_PREFIX=./ \
+  -Dbuild_release=ON \
+  -Dbuild_tests=OFF \
+  -Dbuild_shared_libs=ON \
+  ..
 $ make -j8
 $ make install
-$ tree she_test
-she_test
-├── bin
-│   └── she_test_test
-└── include
-    ├── command_line_parser
-    │   ├── command_line.h
-    │   └── options.h
-    ├── output_format
-    │   ├── common.h
-    │   ├── gtest_format.h
-    │   └── she_test_v1.h
-    ├── print_color.h
-    ├── she_test.h
-    ├── template_support
-    │   └── equal.h
-    └── test_case_registry
-        ├── register_center.h
-        └── test_case.h
+$ tree tree
+.
+├── include
+│   ├── command_line
+│   │   ├── options.h
+│   │   └── parser.h
+│   ├── format
+│   │   ├── color.h
+│   │   ├── fmt.h
+│   │   ├── gtest.h
+│   │   ├── style_v1.h
+│   │   └── template_format.h
+│   ├── run_all_test.h
+│   ├── she_test.h
+│   ├── test_case_registry
+│   │   └── multi_level_test_case.h
+│   └── test_tools
+│       └── equal.h
+└── lib
+    ├── libshe_test.a
+    └── libshe_test.so
 
-6 directories, 11 files
+6 directories, 13 files
 $
 ```
+
