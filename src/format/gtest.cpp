@@ -17,19 +17,22 @@ void she_test::format::gtest::global_start() {
   using namespace color;
   fmt_println("{}[==========]{} Running {} tests.", GREEN_COLOR, RESET_COLOR, get_test_number());
   fmt_println("{}[----------]{} Global test environment set-up.", GREEN_COLOR, RESET_COLOR);
-  fmt_print("{}[----------]{} {} tests from: ", GREEN_COLOR, RESET_COLOR, get_test_number());
-  for (auto test : test_list_) {
-    std::string test_name = [&]() {
-      std::string name;
-      for (auto test_name : test) {
-        name += test_name + ".";
+  fmt_print("{}[----------]{} {} tests from ", GREEN_COLOR, RESET_COLOR, get_test_number());
+  for (int i = 0; i < test_list_.size(); i++) {
+    std::string test_case_format_string = [&]() {
+      std::string string_name;
+      for (auto& test_case_name : test_list_[i]) {
+        string_name += test_case_name + ".";
       }
-      name.pop_back();
-      return name;
+      string_name.pop_back();
+      return string_name;
     }();
-    fmt_print("{}, ", test_name);
+    if (i != test_list_.size() - 1) {
+      fmt_print("{}, ", test_case_format_string);
+    } else {
+      fmt_println("{}", test_case_format_string);
+    }
   }
-  fmt_println("");
 }
 
 void she_test::format::gtest::global_end() {
