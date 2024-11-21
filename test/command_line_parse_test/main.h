@@ -10,16 +10,17 @@
 #include "../test_support.h"
 #include "command_line/options.h"
 #include "command_line/parser.h"
+#include "she_test.h"
 
 namespace command_line_parse_test {
 
-void exec(std::vector<she_test::details::parame_packages> ops) {
+inline void exec(const std::vector<she_test::details::parame_packages>& ops) {
   using namespace she_test;
 
   for (const auto& e : ops) {
     switch (e.key) {
       case details::options::VERSION: {
-        std::cout << "she_test version " << details::version << std::endl;
+        std::cout << "she_test version " << version << std::endl;
         break;
       }
       case details::options::HELP: {

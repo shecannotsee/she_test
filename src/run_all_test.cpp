@@ -1,5 +1,7 @@
 #include "run_all_test.h"
 
+#include <she_test.h>
+
 #include <iostream>
 
 #include "command_line/options.h"
@@ -8,7 +10,7 @@
 
 namespace {
 void exec_version() {
-  std::cout << "she_test version " << she_test::details::version << std::endl;
+  std::cout << "she_test version " << she_test::version << std::endl;
 }
 
 void exec_help() {
@@ -47,6 +49,9 @@ void exec_unknown(const she_test::details::parame_packages& op) {
 void she_test::run_all_test(int argc, char** argv) {
   using namespace she_test;
   using namespace she_test::details;
+  // Get All test case
+  const auto all_test_cases = multi_level_test_case::get_test_case_list();
+  std::vector<std::vector<std::string>> use_test_cases;
   // parser
   parser::get_instance().parse(argc, argv);
   // process command

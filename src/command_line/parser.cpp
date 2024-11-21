@@ -62,6 +62,6 @@ auto she_test::parser::split_suite_name_and_test_case(const std::string& input)
     std::string second = input.substr(pos + 1);
     return std::make_tuple(first, second);
   }
-  std::string error_message = "error param:" + input;
+  const std::string error_message = "error param:" + input;
   throw std::runtime_error(error_message);
 }
