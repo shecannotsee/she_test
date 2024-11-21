@@ -8,13 +8,14 @@
 #include "command_line/parser.h"
 #include "test_case_registry/multi_level_test_case.h"
 
-namespace {
+namespace she_test::details {
+
 void exec_version() {
-  std::cout << "she_test version " << she_test::version << std::endl;
+  std::cout << "she_test version " << version << std::endl;
 }
 
 void exec_help() {
-  std::cout << she_test::details::help_message << std::endl;
+  std::cout << help_message << std::endl;
 }
 
 void exec_list_all_tests() {
@@ -29,66 +30,27 @@ void exec_list_all_tests() {
   }
 }
 
-void exec_run_some_tests() {
+void exec_run_some_tests(std::vector<std::vector<std::string>>& use, const std::vector<std::string>& op_value) {
+  for (const auto& test_case_string : op_value) {
+    if (const auto test_case = command_line::split_test_case_name(test_case_string);
+        multi_level_test_case::test_case_exists(test_case)) {
+      use.emplace_back(test_case);
+    }
+  }
 }
 
-void exec_exclude_some_tests() {
+void exec_exclude_some_tests(std::vector<std::vector<std::string>>& use, const std::vector<std::string>& op_value) {
 }
 
-void exec_run_all_tests() {
+void exec_run_all_tests(const std::vector<std::vector<std::string>>& all, std::vector<std::vector<std::string>>& use) {
+  use = all;
 }
 
-void exec_unknown(const she_test::details::parameter_pack& op) {
+void exec_unknown(const parameter_pack& op) {
   std::cout << "error options:\n";
   for (const auto& error_options : op.value) {
     std::cout << error_options << std::endl;
   }
 }
-}  // namespace
 
-void she_test::run_all_test(int argc, char** argv) {
-  using namespace she_test;
-  using namespace she_test::details;
-  // Get All test case
-  const auto all_test_cases = multi_level_test_case::get_test_case_list();
-  std::vector<std::vector<std::string>> use_test_cases;
-  // parser
-  auto ops = command_line::parse(argc, argv);
-  // process command
-  for (const auto& op : ops) {
-    switch (op.key) {
-      case options::VERSION: {
-        exec_version();
-        return;
-      }  // case options::VERSION
-      case options::HELP: {
-        exec_help();
-        return;
-      }  // case options::HELP
-      case options::LIST_ALL_TESTS: {
-        exec_list_all_tests();
-        return;
-      }  // case options::LIST_ALL_TESTS
-      case options::RUN_SOME_TESTS: {
-        exec_run_some_tests();
-        return;
-      }  // case options::RUN_SOME_TESTS
-      case options::EXCLUDE_SOME_TESTS: {
-        exec_exclude_some_tests();
-        return;
-      }  // case options::EXCLUDE_SOME_TESTS
-      case options::RUN_ALL_TESTS: {
-        exec_run_all_tests();
-        return;
-      }  // case options::RUN_ALL_TESTS
-      case options::UNKNOWN: {
-        exec_unknown(op);
-        return;
-      }  // case options::UNKNOWN
-      default: {
-        std::cout << "Unknown error\n";
-        return;
-      }  // default
-    }    // switch
-  }      // for
-}
+}  // namespace she_test::details
