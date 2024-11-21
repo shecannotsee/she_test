@@ -39,6 +39,15 @@ class multi_level_test_case {
   static void run_test_case(const std::vector<std::string>& test_case_name) {
     get_instance().run(test_case_name);
   }
+
+  static bool test_case_exists(const std::vector<std::string>& test_case_name) {
+    const auto table = get_instance().test_case_table_;
+    if (const auto it = table.find(test_case_name_to_string(test_case_name)); it == table.end()) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 };
 
 #define TEST(name1, name2)                                            \
