@@ -23,8 +23,13 @@ auto she_test::command_line::parse(const int argc, char** argv) -> std::vector<d
     ERROR,
   };
 
-  auto current_state = state::ERROR;
+  auto current_state          = state::ERROR;
+  bool ignore_first_parameter = false;
   for (const auto& arg : args) {
+    if (!ignore_first_parameter) {
+      ignore_first_parameter = true;
+      continue;
+    }
     if (const auto it = details::options_table.find(arg); it != details::options_table.end()) {
       // found command
       ops.emplace_back();

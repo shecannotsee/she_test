@@ -40,6 +40,35 @@ void exec_run_some_tests(std::vector<std::vector<std::string>>& use, const std::
 }
 
 void exec_exclude_some_tests(std::vector<std::vector<std::string>>& use, const std::vector<std::string>& op_value) {
+  std::vector<std::vector<std::string>> excludes;
+  for (const auto& test_case_string : op_value) {
+    if (const auto test_case = command_line::split_test_case_name(test_case_string);
+        multi_level_test_case::test_case_exists(test_case)) {
+      excludes.emplace_back(test_case);
+    }
+  }
+  // exclude
+  for (auto exclude : excludes) {
+    for (int i = 0; i < use.size(); i++) {
+      if (exclude.size() == use[i].size()) {
+        // compare start
+        bool equal = true;
+        for (int j = 0; j < exclude.size(); j++) {
+          if (exclude[j] == use[i][j]) {
+            equal &= true;
+          } else {
+            equal &= false;
+            break;
+          }
+        }
+        // compare end
+        if (equal) {
+          use.erase(use.begin() + i);
+          break;
+        }
+      }  // use[i]
+    }    // for use
+  }      // for excludes
 }
 
 void exec_run_all_tests(const std::vector<std::vector<std::string>>& all, std::vector<std::vector<std::string>>& use) {
