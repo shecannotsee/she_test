@@ -16,25 +16,13 @@ struct parameter_pack {
 };
 }  // namespace details
 
-class parser {
- public:
-  static parser& get_instance();
+namespace command_line {
+// Convert the parameter to a state
+auto parse(int argc, char** argv) -> std::vector<details::parameter_pack>;
 
- private:
-  parser() = default;
-
-  std::vector<details::parameter_pack> ops_{};
-
- public:
-  // Convert the parameter to a state
-  void parse(int argc, char** argv);
-
-  // Use after parsing(this->parse)
-  auto get_ops() -> std::vector<details::parameter_pack>;
-
-  // Check the validity of the test name
-  static auto split_suite_name_and_test_case(const std::string& input) -> std::tuple<std::string, std::string>;
-};
+// Check the validity of the test name
+auto split_test_case_name(const std::string& input) -> std::vector<std::string>;
+};  // namespace command_line
 
 }  // namespace she_test
 

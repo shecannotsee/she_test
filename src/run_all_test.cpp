@@ -53,9 +53,9 @@ void she_test::run_all_test(int argc, char** argv) {
   const auto all_test_cases = multi_level_test_case::get_test_case_list();
   std::vector<std::vector<std::string>> use_test_cases;
   // parser
-  parser::get_instance().parse(argc, argv);
+  auto ops = command_line::parse(argc, argv);
   // process command
-  for (const auto& op : parser::get_instance().get_ops()) {
+  for (const auto& op : ops) {
     switch (op.key) {
       case options::VERSION: {
         exec_version();

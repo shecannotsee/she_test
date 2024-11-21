@@ -35,9 +35,11 @@ inline void exec(const std::vector<she_test::details::parameter_pack>& ops) {
         std::cout << "run:\n";
         for (const auto& test_cases : e.value) {
           try {
-            auto ret = parser::split_suite_name_and_test_case(test_cases);
-            std::cout << "suite name:" << std::get<0>(ret) << ",";
-            std::cout << "test case name:" << std::get<1>(ret) << std::endl;
+            auto test_case_name = command_line::split_test_case_name(test_cases);
+            // show
+            for (const auto& name : test_case_name) {
+              std::cout << name << " ";
+            }
           } catch (const std::runtime_error& ex) {
             std::cout << ex.what() << std::endl;
           }
@@ -48,9 +50,10 @@ inline void exec(const std::vector<she_test::details::parameter_pack>& ops) {
         std::cout << "exclude:\n";
         for (const auto& test_cases : e.value) {
           try {
-            auto ret = parser::split_suite_name_and_test_case(test_cases);
-            std::cout << "suite name:" << std::get<0>(ret) << ",";
-            std::cout << "test case name:" << std::get<1>(ret) << std::endl;
+            auto test_case_name = command_line::split_test_case_name(test_cases);
+            for (const auto& name : test_case_name) {
+              std::cout << name << " ";
+            }
           } catch (const std::runtime_error& ex) {
             std::cout << ex.what() << std::endl;
           }
@@ -80,44 +83,44 @@ inline int run_test() {
   /* version */ {
     constexpr int argc = 2;
     const char* argv[]{"she_test_test", "-version"};
-    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::parser::get_instance().get_ops());
+    const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
+    exec(ops);
   }
   /* help */ {
     constexpr int argc = 2;
     const char* argv[]{"she_test_test", "-help"};
-    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::parser::get_instance().get_ops());
+    const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
+    exec(ops);
   }
   /* list */ {
     constexpr int argc = 2;
     const char* argv[]{"she_test_test", "-list"};
-    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::parser::get_instance().get_ops());
+    const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
+    exec(ops);
   }
   /* list */ {
     constexpr int argc = 4;
     const char* argv[]{"she_test_test", "-run", "s1.t1", "s1.t2"};
-    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::parser::get_instance().get_ops());
+    const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
+    exec(ops);
   }
   /* run */ {
     constexpr int argc = 5;
-    const char* argv[]{"she_test_test", "-exclude", "s1.t1", "s2.t1", "s3,t1"};
-    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::parser::get_instance().get_ops());
+    const char* argv[]{"she_test_test", "-exclude", "s1.t1", "s2.t1", "s3.t1"};
+    const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
+    exec(ops);
   }
   /* run all */ {
     constexpr int argc = 1;
     const char* argv[]{"she_test_test"};
-    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::parser::get_instance().get_ops());
+    const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
+    exec(ops);
   }
   /* error test */ {
     constexpr int argc = 2;
     const char* argv[2]{"she_test_test", "hahahah"};
-    she_test::parser::get_instance().parse(argc, const_cast<char**>(argv));
-    exec(she_test::parser::get_instance().get_ops());
+    const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
+    exec(ops);
   }
 
   return 0;
