@@ -30,9 +30,10 @@ void she_test::format::gtest::global_start() {
     if (i != test_list_.size() - 1) {
       fmt_print("{}, ", test_case_format_string);
     } else {
-      fmt_println("{}", test_case_format_string);
+      fmt_print("{}", test_case_format_string);
     }
   }
+  fmt_println("");
 }
 
 void she_test::format::gtest::global_end() {
