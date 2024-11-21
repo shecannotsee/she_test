@@ -47,8 +47,8 @@ class template_format {
   virtual void global_start() = 0;
   virtual void global_end()   = 0;
 
-  virtual void before_test_case(const std::string& test_name) = 0;
-  virtual void after_test_case(const std::string& test_name)  = 0;
+  virtual void before_test_case(const std::string& test_name)                  = 0;
+  virtual void after_test_case(const std::string& test_name, bool pass) = 0;
 };
 
 }  // namespace she_test::format

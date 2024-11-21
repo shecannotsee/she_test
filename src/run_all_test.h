@@ -75,12 +75,13 @@ void run_all_test(int argc, char** argv) {
       return string_name;
     }();
     fmt.before_test_case(test_case_format_string);
+    bool pass = true;
     try {
-      multi_level_test_case::run_test_case(test_case);
+      multi_level_test_case::run_test_case(test_case, pass);
     } catch (const std::runtime_error& e) {
       std::cout << e.what() << std::endl;
     }
-    fmt.after_test_case(test_case_format_string);
+    fmt.after_test_case(test_case_format_string, pass);
   }
 }
 

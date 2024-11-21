@@ -34,6 +34,7 @@ bool check_equal(T&& first, T&& second, Args&&... args) {
 #define CHECK_EQUAL(...)                                              \
   {                                                                   \
     if (!she_test::check_equal<decltype(__VA_ARGS__)>(__VA_ARGS__)) { \
+      __pass = false;                                                 \
       printf("%s:%d\n", __FILE__, __LINE__);                          \
     }                                                                 \
   }

@@ -21,7 +21,7 @@ void multi_level_test_case::add(const std::vector<std::string>& name, const test
   test_case_list_.emplace_back(name);
 }
 
-void multi_level_test_case::run(const test_case_name& name) {
+void multi_level_test_case::run(const test_case_name& name, bool& pass) {
   const auto key = test_case_name_to_string(name);
   // Not found
   if (const auto it = test_case_table_.find(key); it == test_case_table_.end()) {
@@ -29,5 +29,5 @@ void multi_level_test_case::run(const test_case_name& name) {
   }
   const auto func = test_case_table_.at(key);
   // run
-  func();
+  func(pass);
 }
