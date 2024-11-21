@@ -10,7 +10,7 @@
 namespace she_test {
 
 namespace details {
-struct parame_packages {
+struct parameter_pack {
   options key{};
   std::vector<std::string> value{};
 };
@@ -23,14 +23,14 @@ class parser {
  private:
   parser() = default;
 
-  std::vector<details::parame_packages> ops_{};
+  std::vector<details::parameter_pack> ops_{};
 
  public:
   // Convert the parameter to a state
   void parse(int argc, char** argv);
 
   // Use after parsing(this->parse)
-  auto get_ops() -> std::vector<details::parame_packages>;
+  auto get_ops() -> std::vector<details::parameter_pack>;
 
   // Check the validity of the test name
   static auto split_suite_name_and_test_case(const std::string& input) -> std::tuple<std::string, std::string>;

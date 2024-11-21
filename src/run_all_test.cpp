@@ -38,7 +38,7 @@ void exec_exclude_some_tests() {
 void exec_run_all_tests() {
 }
 
-void exec_unknown(const she_test::details::parame_packages& op) {
+void exec_unknown(const she_test::details::parameter_pack& op) {
   std::cout << "error options:\n";
   for (const auto& error_options : op.value) {
     std::cout << error_options << std::endl;

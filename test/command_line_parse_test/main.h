@@ -14,7 +14,7 @@
 
 namespace command_line_parse_test {
 
-inline void exec(const std::vector<she_test::details::parame_packages>& ops) {
+inline void exec(const std::vector<she_test::details::parameter_pack>& ops) {
   using namespace she_test;
 
   for (const auto& e : ops) {

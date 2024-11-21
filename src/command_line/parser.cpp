@@ -40,7 +40,7 @@ void she_test::parser::parse(int argc, char** argv) {
       ops_.back().value.emplace_back(args[i]);
     } else {
       // error command
-      details::parame_packages error_temp;
+      details::parameter_pack error_temp;
       error_temp.key = details::options::UNKNOWN;
       error_temp.value.emplace_back(args[i]);
       ops_.emplace_back(error_temp);
@@ -48,7 +48,7 @@ void she_test::parser::parse(int argc, char** argv) {
   }
 }
 
-std::vector<she_test::details::parame_packages> she_test::parser::get_ops() {
+std::vector<she_test::details::parameter_pack> she_test::parser::get_ops() {
   auto ret = std::move(ops_);
   ops_.clear();
   return ret;
