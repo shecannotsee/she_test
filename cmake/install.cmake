@@ -3,11 +3,11 @@ if (NOT DEFINED CMAKE_INSTALL_PREFIX)
     set(CMAKE_INSTALL_PREFIX "/")
 endif ()
 
-# Install header files
-install(FILES
-        ${include_list} # from target_src.cmake
-        DESTINATION # to
-        ${project_name}/include # install path
+# Install header files while maintaining directory structure
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/src/
+        DESTINATION ${project_name}/include
+        FILES_MATCHING
+        PATTERN "*.h"
 )
 # Install static library
 install(TARGETS
