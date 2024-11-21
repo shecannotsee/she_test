@@ -1,9 +1,5 @@
-/*
- * The file is just a simple example
- */
-
-#ifndef SHE_TEST_REGISTER_TEST_H
-#define SHE_TEST_REGISTER_TEST_H
+#ifndef TEST_REGISTER_DEMO_TEST_REGISTER_DEMO_H
+#define TEST_REGISTER_DEMO_TEST_REGISTER_DEMO_H
 
 #include <functional>
 #include <vector>
@@ -31,15 +27,14 @@ class register_demo {
   register_demo(register_demo&&)            = delete;
   register_demo& operator=(register_demo&&) = delete;
 
- public:
   // register test function
-  static void register_test(std::function<void()> testFunction) {
+  static void register_test(const std::function<void()>& testFunction) {
     instance().tests.push_back(testFunction);
   }
 
   // run
   static void run_all_tests() {
-    for (auto test : instance().tests) {
+    for (const auto& test : instance().tests) {
       test();  // call test function
     }
   }
@@ -57,4 +52,4 @@ class register_demo {
 };
 }  // namespace testing_only
 
-#endif  // SHE_TEST_REGISTER_TEST_H
+#endif  // TEST_REGISTER_DEMO_TEST_REGISTER_DEMO_H

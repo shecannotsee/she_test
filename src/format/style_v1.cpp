@@ -23,20 +23,20 @@ void she_test::format::style_v1::global_end() {
   using namespace color;
   fmt_println("{}[she_test]{} All test cases have ended running.", PURPLE_COLOR, RESET_COLOR);
   fmt_println("{}[she_test] >> {}{} tests ran. ({} ms total)", PURPLE_COLOR, RESET_COLOR, test_number_,
-              template_format::get_test_time());
+              get_test_time());
   fmt_println("{}[she_test] >> {} PASSED {} tests", PURPLE_COLOR, RESET_COLOR,
-              template_format::get_test_number() - template_format::get_failed_tests());
+              get_test_number() - get_failed_tests());
 }
 
 void she_test::format::style_v1::before_test_case(const std::string& test_name) {
   using namespace color;
   fmt_println("{}[she_test] READY TO RACE...>> {}{}", YELLOW_COLOR, RESET_COLOR, test_name);
-  template_format::start_test_time();
+  start_test_time();
 }
 
 void she_test::format::style_v1::after_test_case(const std::string& test_name, bool& pass) {
   using namespace color;
-  auto time = template_format::end_test_time();
+  auto time = end_test_time();
   if (pass) {
     fmt_println("{}[she_test] RACE COMPLETED. >> SUCCESS({} ms){}", GREEN_COLOR, time, RESET_COLOR);
   } else {

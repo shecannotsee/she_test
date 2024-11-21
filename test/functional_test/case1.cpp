@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include "test_tools/equal.h"
-
 // level.test
 // test1
 // level1.test
@@ -19,7 +17,7 @@ TEST(level, test) {
 
 TEST1(test1) {
   std::cout << "test" << std::endl;
-  CHECK_EQUAL(1,2);
+  CHECK_EQUAL(1, 2);
 }
 
 TEST2(level1, test) {

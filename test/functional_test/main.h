@@ -1,13 +1,11 @@
-#ifndef FUNCTIONAL_MAIN_H
-#define FUNCTIONAL_MAIN_H
-
-#include <she_test.h>
+#ifndef TEST_FUNCTIONAL_MAIN_H
+#define TEST_FUNCTIONAL_MAIN_H
 
 #include "../test_support.h"
 
-namespace functional {
+namespace functional_test {
 
-void run_tests() {
+inline void run_tests() {
   test_support _("functional");
   // level.test
   // test1
@@ -37,6 +35,6 @@ void run_tests() {
   }
 }
 
-}  // namespace functional
+}  // namespace functional_test
 
-#endif  // FUNCTIONAL_MAIN_H
+#endif  // TEST_FUNCTIONAL_MAIN_H

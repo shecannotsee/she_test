@@ -1,20 +1,11 @@
-//
-// Created by shecannotsee on 24-2-29.
-//
-
-#ifndef OUTPUT_FORMAT_TEST_MAIN_H
-#define OUTPUT_FORMAT_TEST_MAIN_H
-
-#include <format/gtest.h>
-
-#include <thread>
+#ifndef TEST_FORMAT_TEST_MAIN_H
+#define TEST_FORMAT_TEST_MAIN_H
 
 #include "../test_support.h"
-#include "format/style_v1.h"
 
-namespace format {
+namespace format_test {
 
-inline int run_test() {
+inline void run_test() {
   test_support _("format");
 
   {
@@ -37,10 +28,8 @@ inline int run_test() {
     bool pass = true;
     t2.after_test_case("level", pass);
   }
-
-  return 0;
 }
 
-}  // namespace format
+}  // namespace format_test
 
-#endif  // OUTPUT_FORMAT_TEST_MAIN_H
+#endif  // TEST_FORMAT_TEST_MAIN_H

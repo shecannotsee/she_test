@@ -44,9 +44,8 @@ class multi_level_test_case {
     const auto table = get_instance().test_case_table_;
     if (const auto it = table.find(test_case_name_to_string(test_case_name)); it == table.end()) {
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
 };
 
@@ -74,7 +73,7 @@ class multi_level_test_case {
 
 #define TEST2(name1, name2)                                           \
   namespace name1::name2 {                                            \
-  void __func(bool& __pass);                                           \
+  void __func(bool& __pass);                                          \
   struct __register {                                                 \
     __register() {                                                    \
       multi_level_test_case::add_test_case({#name1, #name2}, __func); \
@@ -85,7 +84,7 @@ class multi_level_test_case {
 
 #define TEST3(name1, name2, name3)                                            \
   namespace name1::name2::name3 {                                             \
-  void __func(bool& __pass);                                                   \
+  void __func(bool& __pass);                                                  \
   struct __register {                                                         \
     __register() {                                                            \
       multi_level_test_case::add_test_case({#name1, #name2, #name3}, __func); \
@@ -96,7 +95,7 @@ class multi_level_test_case {
 
 #define TEST4(name1, name2, name3, name4)                                             \
   namespace name1::name2::name3::name4 {                                              \
-  void __func(bool& __pass);                                                           \
+  void __func(bool& __pass);                                                          \
   struct __register {                                                                 \
     __register() {                                                                    \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4}, __func); \
@@ -107,7 +106,7 @@ class multi_level_test_case {
 
 #define TEST5(name1, name2, name3, name4, name5)                                              \
   namespace name1::name2::name3::name4::name5 {                                               \
-  void __func(bool& __pass);                                                                   \
+  void __func(bool& __pass);                                                                  \
   struct __register {                                                                         \
     __register() {                                                                            \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5}, __func); \
@@ -118,7 +117,7 @@ class multi_level_test_case {
 
 #define TEST6(name1, name2, name3, name4, name5, name6)                                               \
   namespace name1::name2::name3::name4::name5::name6 {                                                \
-  void __func(bool& __pass);                                                                           \
+  void __func(bool& __pass);                                                                          \
   struct __register {                                                                                 \
     __register() {                                                                                    \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6}, __func); \
@@ -129,7 +128,7 @@ class multi_level_test_case {
 
 #define TEST7(name1, name2, name3, name4, name5, name6, name7)                                                \
   namespace name1::name2::name3::name4::name5::name6::name7 {                                                 \
-  void __func(bool& __pass);                                                                                   \
+  void __func(bool& __pass);                                                                                  \
   struct __register {                                                                                         \
     __register() {                                                                                            \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7}, __func); \
@@ -140,7 +139,7 @@ class multi_level_test_case {
 
 #define TEST8(name1, name2, name3, name4, name5, name6, name7, name8)                                                 \
   namespace name1::name2::name3::name4::name5::name6::name7::name8 {                                                  \
-  void __func(bool& __pass);                                                                                           \
+  void __func(bool& __pass);                                                                                          \
   struct __register {                                                                                                 \
     __register() {                                                                                                    \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8}, __func); \
@@ -151,7 +150,7 @@ class multi_level_test_case {
 
 #define TEST9(name1, name2, name3, name4, name5, name6, name7, name8, name9)                                         \
   namespace name1::name2::name3::name4::name5::name6::name7::name8::name9 {                                          \
-  void __func(bool& __pass);                                                                                          \
+  void __func(bool& __pass);                                                                                         \
   struct __register {                                                                                                \
     __register() {                                                                                                   \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9}, \
@@ -163,7 +162,7 @@ class multi_level_test_case {
 
 #define TEST10(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10)                 \
   namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10 {                   \
-  void __func(bool& __pass);                                                                           \
+  void __func(bool& __pass);                                                                          \
   struct __register {                                                                                 \
     __register() {                                                                                    \
       multi_level_test_case::add_test_case(                                                           \
@@ -175,7 +174,7 @@ class multi_level_test_case {
 
 #define TEST11(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10, name11)                  \
   namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11 {                    \
-  void __func(bool& __pass);                                                                                    \
+  void __func(bool& __pass);                                                                                   \
   struct __register {                                                                                          \
     __register() {                                                                                             \
       multi_level_test_case::add_test_case(                                                                    \
@@ -187,7 +186,7 @@ class multi_level_test_case {
 
 #define TEST12(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10, name11, name12)          \
   namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12 {            \
-  void __func(bool& __pass);                                                                                    \
+  void __func(bool& __pass);                                                                                   \
   struct __register {                                                                                          \
     __register() {                                                                                             \
       multi_level_test_case::add_test_case(                                                                    \
@@ -200,7 +199,7 @@ class multi_level_test_case {
 
 #define TEST13(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10, name11, name12, name13)       \
   namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12::name13 {         \
-  void __func(bool& __pass);                                                                                         \
+  void __func(bool& __pass);                                                                                        \
   struct __register {                                                                                               \
     __register() {                                                                                                  \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, \
@@ -214,7 +213,7 @@ class multi_level_test_case {
 
 #define TEST14(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10, name11, name12, name13, name14) \
   namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12::name13::name14 {   \
-  void __func(bool& __pass);                                                                                           \
+  void __func(bool& __pass);                                                                                          \
   struct __register {                                                                                                 \
     __register() {                                                                                                    \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9,   \
@@ -230,7 +229,7 @@ class multi_level_test_case {
                name15)                                                                                                 \
   namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12::name13::name14::    \
       name15 {                                                                                                         \
-  void __func(bool& __pass);                                                                                            \
+  void __func(bool& __pass);                                                                                           \
   struct __register {                                                                                                  \
     __register() {                                                                                                     \
       multi_level_test_case::add({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9, #name10,     \
@@ -246,7 +245,7 @@ class multi_level_test_case {
                name15, name16)                                                                                         \
   namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12::name13::name14::    \
       name15::name16 {                                                                                                 \
-  void __func(bool& __pass);                                                                                            \
+  void __func(bool& __pass);                                                                                           \
   struct __register {                                                                                                  \
     __register() {                                                                                                     \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9,    \
@@ -262,7 +261,7 @@ class multi_level_test_case {
                name15, name16, name17)                                                                                 \
   namespace name1::name2::name3::name4::name5::name6::name7::name8::name9::name10::name11::name12::name13::name14::    \
       name15::name16::name17 {                                                                                         \
-  void __func(bool& __pass);                                                                                            \
+  void __func(bool& __pass);                                                                                           \
   struct __register {                                                                                                  \
     __register() {                                                                                                     \
       multi_level_test_case::add_test_case({#name1, #name2, #name3, #name4, #name5, #name6, #name7, #name8, #name9,    \

@@ -19,7 +19,7 @@ void she_test::format::gtest::global_start() {
   fmt_println("{}[----------]{} Global test environment set-up.", GREEN_COLOR, RESET_COLOR);
   fmt_print("{}[----------]{} {} tests from ", GREEN_COLOR, RESET_COLOR, get_test_number());
   for (int i = 0; i < test_list_.size(); i++) {
-    std::string test_case_format_string = [&]() {
+    std::string test_case_format_string = [&] {
       std::string string_name;
       for (auto& test_case_name : test_list_[i]) {
         string_name += test_case_name + ".";
@@ -46,12 +46,12 @@ void she_test::format::gtest::global_end() {
 void she_test::format::gtest::before_test_case(const std::string& test_name) {
   using namespace color;
   fmt_println("{}[ RUN      ]{} {}", GREEN_COLOR, RESET_COLOR, test_name);
-  template_format::start_test_time();
+  start_test_time();
 }
 
 void she_test::format::gtest::after_test_case(const std::string& test_name, bool& pass) {
   using namespace color;
-  auto time = template_format::end_test_time();
+  auto time = end_test_time();
   if (pass) {
     fmt_println("{}[       OK ]{} {}({} ms)", GREEN_COLOR, RESET_COLOR, test_name, time);
   } else {

@@ -1,14 +1,14 @@
-#ifndef TEMPLATE_SUPPORT_TEST_START_TEST_H
-#define TEMPLATE_SUPPORT_TEST_START_TEST_H
+#ifndef TEST_TEST_TOOLS_TEST_MAIN_H
+#define TEST_TEST_TOOLS_TEST_MAIN_H
+
 #include <iostream>
 #include <string>
 
 #include "../test_support.h"
-#include "test_tools/equal.h"
 
-namespace test_tools {
+namespace test_tools_test {
 
-inline int run_test() {
+inline void run_test() {
   test_support _("test_tools");
 
   using namespace she_test;
@@ -19,9 +19,8 @@ inline int run_test() {
   std::cout << "Are all values equal? " << check_equal<std::string>("123", std::string("123"), std::string("1234"))
             << std::endl;
   std::cout << "Are all values equal? " << check_equal<const char*>("1", "1") << std::endl;
-  return 0;
 }
 
-}  // namespace test_tools
+}  // namespace test_tools_test
 
-#endif  // TEMPLATE_SUPPORT_TEST_START_TEST_H
+#endif  // TEST_TEST_TOOLS_TEST_MAIN_H

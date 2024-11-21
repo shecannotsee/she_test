@@ -66,7 +66,7 @@ void run_all_test(int argc, char** argv) {
   // Run test case
   format_type fmt(use_test_cases.size(), use_test_cases);
   for (const auto& test_case : use_test_cases) {
-    auto test_case_format_string = [&]() {
+    auto test_case_format_string = [&] {
       std::string string_name;
       for (auto& test_case_name : test_case) {
         string_name += test_case_name + ".";
