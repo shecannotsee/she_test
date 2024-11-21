@@ -9,10 +9,10 @@ namespace she_test::format {
 
 class style_v1 final : public template_format {
   uint64_t test_number_;
-  std::vector<std::string> test_list_;
+  std::vector<std::vector<std::string>> test_list_;
 
  public:
-  explicit style_v1(uint64_t test_number, const std::vector<std::string>& test_list);
+  explicit style_v1(uint64_t test_number, const std::vector<std::vector<std::string>>& test_list);
 
   ~style_v1() override;
 

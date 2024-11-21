@@ -3,7 +3,7 @@
 #include "color.h"
 #include "fmt.h"
 
-she_test::format::gtest::gtest(const uint64_t test_number, const std::vector<std::string>& test_list)
+she_test::format::gtest::gtest(const uint64_t test_number, const std::vector<std::vector<std::string>>& test_list)
     : test_number_(test_number), test_list_(test_list) {
   set_test_number(test_number_);
   gtest::global_start();
@@ -17,7 +17,19 @@ void she_test::format::gtest::global_start() {
   using namespace color;
   fmt_println("{}[==========]{} Running {} tests.", GREEN_COLOR, RESET_COLOR, get_test_number());
   fmt_println("{}[----------]{} Global test environment set-up.", GREEN_COLOR, RESET_COLOR);
-  fmt_println("{}[----------]{} {} tests from {}.", GREEN_COLOR, RESET_COLOR, get_test_number(), "...");  // TODO:
+  fmt_print("{}[----------]{} {} tests from: ", GREEN_COLOR, RESET_COLOR, get_test_number());
+  for (auto test : test_list_) {
+    std::string test_name = [&]() {
+      std::string name;
+      for (auto test_name : test) {
+        name += test_name + ".";
+      }
+      name.pop_back();
+      return name;
+    }();
+    fmt_print("{}, ", test_name);
+  }
+  fmt_println("");
 }
 
 void she_test::format::gtest::global_end() {

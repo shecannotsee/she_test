@@ -3,7 +3,7 @@
 #include "color.h"
 #include "fmt.h"
 
-she_test::format::style_v1::style_v1(uint64_t test_number, const std::vector<std::string>& test_list)
+she_test::format::style_v1::style_v1(uint64_t test_number, const std::vector<std::vector<std::string>>& test_list)
     : test_number_(test_number), test_list_(test_list) {
   set_test_number(test_number_);
   style_v1::global_start();
