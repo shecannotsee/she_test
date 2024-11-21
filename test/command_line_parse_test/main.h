@@ -82,43 +82,49 @@ inline int run_test() {
   test_support _("command_line_parse_test");
   /* version */ {
     constexpr int argc = 2;
-    const char* argv[]{"she_test_test", "-version"};
+    const char* argv[argc]{"she_test_test", "-version"};
     const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
     exec(ops);
   }
   /* help */ {
     constexpr int argc = 2;
-    const char* argv[]{"she_test_test", "-help"};
+    const char* argv[argc]{"she_test_test", "-help"};
     const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
     exec(ops);
   }
   /* list */ {
     constexpr int argc = 2;
-    const char* argv[]{"she_test_test", "-list"};
+    const char* argv[argc]{"she_test_test", "-list"};
     const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
     exec(ops);
   }
   /* list */ {
-    constexpr int argc = 4;
-    const char* argv[]{"she_test_test", "-run", "s1.t1", "s1.t2"};
+    constexpr int argc = 5;
+    const char* argv[argc]{"she_test_test", "-run", "l1.t1", "l1.t2", "l1.l2.t1"};
     const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
     exec(ops);
   }
   /* run */ {
-    constexpr int argc = 5;
-    const char* argv[]{"she_test_test", "-exclude", "s1.t1", "s2.t1", "s3.t1"};
+    constexpr int argc = 6;
+    const char* argv[argc]{"she_test_test", "-exclude", "l1.t1", "l2.t1", "l3.t1", "l1.l2.l3.l4.l5.l6.l7.l8.l9.t1"};
     const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
     exec(ops);
   }
   /* run all */ {
     constexpr int argc = 1;
-    const char* argv[]{"she_test_test"};
+    const char* argv[argc]{"she_test_test"};
     const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
     exec(ops);
   }
   /* error test */ {
     constexpr int argc = 2;
-    const char* argv[2]{"she_test_test", "hahahah"};
+    const char* argv[argc]{"she_test_test", "error"};
+    const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
+    exec(ops);
+  }
+  /* error test */ {
+    constexpr int argc = 3;
+    const char* argv[argc]{"she_test_test", "-run", "asdad,dsad"};
     const auto ops = she_test::command_line::parse(argc, const_cast<char**>(argv));
     exec(ops);
   }

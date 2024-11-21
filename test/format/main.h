@@ -18,7 +18,7 @@ inline int run_test() {
   test_support _("format");
 
   {
-    she_test::format::gtest t1(3, {"test", "test2", "test3"});
+    she_test::format::gtest t1(3, {{"test", "test2", "test3"}});
     t1.before_test_case("level");
     [] {
       std::cout << "running...\n";
@@ -27,7 +27,7 @@ inline int run_test() {
     t1.after_test_case("level");
   }
   {
-    she_test::format::style_v1 t2(3, {"test", "test2", "test3"});
+    she_test::format::style_v1 t2(3, {{"test", "test2", "test3"}});
     t2.before_test_case("level");
     [] {
       std::cout << "running...\n";
