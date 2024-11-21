@@ -19,13 +19,13 @@ class template_format {
   }
   virtual ~template_format() = default;
 
-  auto get_test_number() const -> uint64_t {
+  [[nodiscard]] auto get_test_number() const -> uint64_t {
     return total_number_of_tests;
   }
   void set_test_number(const uint64_t test_number) {
     total_number_of_tests = test_number;
   }
-  auto get_failed_tests() const -> uint64_t {
+  [[nodiscard]] auto get_failed_tests() const -> uint64_t {
     return failed_tests;
   }
   void add_failed_test_number() {
@@ -40,7 +40,7 @@ class template_format {
     test_time += elapsed.count();
     return elapsed.count();
   }
-  auto get_test_time() const -> uint64_t {
+  [[nodiscard]] auto get_test_time() const -> uint64_t {
     return test_time;
   }
 
