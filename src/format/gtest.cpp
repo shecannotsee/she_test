@@ -49,7 +49,7 @@ void she_test::format::gtest::before_test_case(const std::string& test_name) {
   template_format::start_test_time();
 }
 
-void she_test::format::gtest::after_test_case(const std::string& test_name, bool pass) {
+void she_test::format::gtest::after_test_case(const std::string& test_name, bool& pass) {
   using namespace color;
   auto time = template_format::end_test_time();
   if (pass) {

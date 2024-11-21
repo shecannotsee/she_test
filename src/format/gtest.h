@@ -22,7 +22,7 @@ class gtest final : public template_format {
 
   void before_test_case(const std::string& test_name) override;
 
-  void after_test_case(const std::string& test_name, bool pass) override;
+  void after_test_case(const std::string& test_name, bool& pass) override;
 };
 
 }  // namespace she_test::format
