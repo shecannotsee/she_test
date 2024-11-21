@@ -24,7 +24,8 @@ inline int run_test() {
       std::cout << "running...\n";
       return true;
     }();
-    t1.after_test_case("level");
+    bool pass = true;
+    t1.after_test_case("level", pass);
   }
   {
     she_test::format::style_v1 t2(3, {{"test", "test2", "test3"}});
@@ -33,12 +34,13 @@ inline int run_test() {
       std::cout << "running...\n";
       return true;
     }();
-    t2.after_test_case("level");
+    bool pass = true;
+    t2.after_test_case("level", pass);
   }
 
   return 0;
 }
 
-}  // namespace output_format_test
+}  // namespace format
 
 #endif  // OUTPUT_FORMAT_TEST_MAIN_H
